@@ -13,18 +13,20 @@ namespace PathfindingAlgorithms
     {
         public string ID;
         public double[] Pos;
-        public List<Node> Neighbours;
+        public List<(Node, int)> Neighbours;
+        public bool Visited;
 
         protected Node(string id, double[] pos)
         {
             ID = id;
             Pos = pos;
-            Neighbours = new List<Node>();
+            Neighbours = new List<(Node, int)>();
         }
         public abstract void Mark();
-        public void AddNeighbour(Node n)
+        // <sumary> Add neighbour and weight to Neigbours list </sumary>
+        public void AddNeighbour(Node n, int w)
         {
-            Neighbours.Add(n);
+            Neighbours.Add((n, w));
         }
     }
     class GridNode : Node

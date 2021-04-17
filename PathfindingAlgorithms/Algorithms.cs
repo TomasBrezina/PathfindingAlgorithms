@@ -6,13 +6,24 @@ using System.Threading.Tasks;
 
 namespace PathfindingAlgorithms
 {
-    abstract class Algorithm
+    public static abstract class Algorithm
     {
-        
+        protected abstract List<Node> ShortestPath();
     }
 
-    class DFS : Algorithm
+    /*
+    Breadth First Search
+    Unweighted
+    O(v+e)
+    */
+    public static class BFS : Algorithm
     {
+        public static override List<Node> ShortestPath(Node StartNode, Node EndNode)
+        {
+            // Queue for BFS
+            Queue<Node> queue = Queue<Node>;
 
+
+        }
     }
 }

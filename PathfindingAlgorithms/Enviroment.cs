@@ -14,6 +14,7 @@ namespace PathfindingAlgorithms
     abstract class Enviroment
     {
         public Dictionary<string,Node> Nodes = new Dictionary<string,Node>();
+
         protected Canvas Canv;
         public Enviroment(Canvas canv)
         {
