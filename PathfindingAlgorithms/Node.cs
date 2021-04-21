@@ -9,41 +9,65 @@ using System.Windows.Shapes;
 
 namespace PathfindingAlgorithms
 {
-    abstract class Node
+    public static class NodeBrushes
     {
-        public string ID;
-        public double[] Pos;
-        public List<(Node, int)> Neighbours;
-        public bool Visited;
+        public static SolidColorBrush Default = Brushes.White;
+        public static SolidColorBrush Visited = Brushes.DarkGray;
+        public static SolidColorBrush Observed = Brushes.LightGray;
+    }
+    public enum NodeTypes
+    {
+        Empty,
+        Wall,
+    }
 
-        protected Node(string id, double[] pos)
+    public class Edge
+    {
+        public Node Node;
+        public float Weight;
+
+        public Edge(Node toNode, float weight)
+        {
+            Node = toNode;
+            Weight = weight;
+        }
+    }
+    public class Node
+    {
+        public int ID;
+        public double[] Pos;
+        public List<Edge> Edges;
+
+        protected Node(int id, double[] pos)
         {
             ID = id;
             Pos = pos;
-            Neighbours = new List<(Node, int)>();
+            Edges = new List<Edge>();
         }
-        public abstract void Mark();
-        // <sumary> Add neighbour and weight to Neigbours list </sumary>
-        public void AddNeighbour(Node n, int w)
+        public virtual void Clear() { }
+        public virtual void MarkAs(Brush b) { }
+
+        // Add neighbour and weight to Neigbours list 
+        public void AddEdge(Node node, float weight)
         {
-            Neighbours.Add((n, w));
+            Edges.Add(new Edge(node, weight));
         }
     }
     class GridNode : Node
     {
         public Rectangle Rect;
-        public GridNode(string id, double[] pos, Rectangle rect) : base(id, pos)
+        public GridNode(int id, double[] pos, Rectangle rect) : base(id, pos)
         { 
             Rect = rect;
-            Rect.Fill = Brushes.White;
+            Rect.Fill = NodeBrushes.Default;
             Rect.Stroke = Brushes.Gray;
             Rect.StrokeThickness = 0.5;
             Rect.MouseLeftButtonDown += Rect_MouseLeftButtonDown;
             Rect.MouseRightButtonDown += Rect_MouseRightButtonDown;
         }
-        public override void Mark()
+        public override void MarkAs(Brush b)
         {
-            Rect.Fill = Brushes.Red;
+            Rect.Fill = b;
         }
 
         private void Rect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

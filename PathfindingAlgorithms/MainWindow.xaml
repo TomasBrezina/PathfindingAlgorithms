@@ -16,6 +16,6 @@
         <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="GridCanvas" Grid.Row="0" Grid.Column="0">
             
         </Canvas>
-        <Button Grid.Row="1" Grid.Column="0" Content="Start" Width="100" Height="30"/>
+        <Button Grid.Row="1" Grid.Column="0" Content="Start" Width="100" Height="30" Click="Button_Click"/>
     </Grid>
 </Window>

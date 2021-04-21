@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace PathfindingAlgorithms
 {
@@ -21,6 +22,8 @@ namespace PathfindingAlgorithms
     public partial class MainWindow : Window
     {
         Enviroment env;
+        BFS alg;
+        DispatcherTimer stepTimer;
 
         public MainWindow()
         {
@@ -28,22 +31,47 @@ namespace PathfindingAlgorithms
 
             Loaded += delegate
             {
-                env = new Grid(GridCanvas, new int[] { 30, 15 });
+                env = new Grid(GridCanvas, new int[] { 20, 10 });
                 env.Initialize();
+             
 
+                /*
                 Node[] path = new Node[]
                 {
-                    env.Nodes["1,1"],
-                    env.Nodes["2,1"],
-                    env.Nodes["3,1"],
-                    env.Nodes["4,1"],
-                    env.Nodes["5,2"],
-                    env.Nodes["1,2"],
-                    env.Nodes["1,3"],
+                    env.Nodes[env.CoordsToIndex(1, 1)],
+                    env.Nodes[env.CoordsToIndex(2, 1)],
+                    env.Nodes[env.CoordsToIndex(3, 1)],
+                    env.Nodes[env.CoordsToIndex(3, 2)],
+                    env.Nodes[env.CoordsToIndex(4, 3)],
                 };
                 //env.DrawPath(path);
+                */
      
             };
+        }
+
+        public void Step(object sender, EventArgs e)
+        {
+            if (alg.Step())
+            {
+                stepTimer.Stop();
+                env.DrawPath(alg.FindPath());
+            } 
+        }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            env.Clear();
+            env.RemovePaths();
+            Node startNode = env.Nodes[env.CoordsToIndex(10, 5)];
+            startNode.MarkAs(Brushes.Blue);
+            Node endNode = env.Nodes[env.CoordsToIndex(1, 1)];
+            endNode.MarkAs(Brushes.Blue);
+            alg = new BFS(startNode, endNode, env.Nodes.Count);
+
+            stepTimer = new DispatcherTimer();
+            stepTimer.Interval = TimeSpan.FromMilliseconds(20);
+            stepTimer.Tick += new EventHandler(Step);
+            stepTimer.Start();
         }
     }
 }
