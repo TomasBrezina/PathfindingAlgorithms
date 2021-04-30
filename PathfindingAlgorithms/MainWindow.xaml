@@ -6,16 +6,63 @@
         xmlns:local="clr-namespace:PathfindingAlgorithms"
         mc:Ignorable="d"
     
-        Title="MainWindow" Height="500" Width="800" ResizeMode="NoResize">
+        Title="MainWindow" Height="500" Width="800" ResizeMode="NoResize" Background="#eee">
     <Grid Margin="15">
         <Grid.RowDefinitions>
-            <RowDefinition Height="6*"/>
             <RowDefinition Height="1*"/>
+            <RowDefinition Height="6*"/>
         </Grid.RowDefinitions>
 
-        <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="GridCanvas" Grid.Row="0" Grid.Column="0">
+        <DockPanel>
+            <ToolBarTray ToolBarTray.IsLocked="True" Background="#eee" Grid.Row="0" >
+                <ToolBar Height="30" Background="#eee">
+                    <Button ToolBar.OverflowMode="Never" Margin="5,0" Click="Button_Click" ToolTip="Run selected algorithm.">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="images/play.png" />
+                            <TextBlock VerticalAlignment="Center" Margin="3,0,0,0">Run</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Separator/>
+                    <Button ToolBar.OverflowMode="Never" Margin="5,0" Command="Paste" ToolTip="Paste from Windows Clipboard.">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="images/pause.png" />
+                            <TextBlock VerticalAlignment="Center" Margin="3,0,0,0">Pause</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Separator/>
+                    <Button ToolBar.OverflowMode="Never" Margin="5,0" Command="Paste" ToolTip="Paste from Windows Clipboard.">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="images/stop.png" />
+                            <TextBlock VerticalAlignment="Center" Margin="3,0,0,0">Stop</TextBlock>
+                        </StackPanel>
+                    </Button>
+                </ToolBar>
+                <ToolBar Height="30" Background="#eee">
+                    <ComboBox>
+                        <ComboBoxItem IsSelected="True">Depth First Search</ComboBoxItem>
+                        <ComboBoxItem>Breadth First Search</ComboBoxItem>
+                        <ComboBoxItem>Dijstras</ComboBoxItem>
+                        <ComboBoxItem>A star</ComboBoxItem>
+                    </ComboBox>
+                    <Button Margin="5,0" Command="Paste" ToolTip="Paste from Windows Clipboard.">
+                        <Image Source="images/book-question.png" />
+                    </Button>
+                </ToolBar>
+            </ToolBarTray>
+        </DockPanel>
+
+        <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="GridCanvas" Grid.Row="1" Grid.Column="0">
             
         </Canvas>
-        <Button Grid.Row="1" Grid.Column="0" Content="Start" Width="100" Height="30" Click="Button_Click"/>
+
+        <!-- <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
+            <Button Width="100">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Image Source="images/play.png" Width="24"/>
+                    <TextBlock Text="Play" FontSize="15" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+        </StackPanel> -->
+    
     </Grid>
 </Window>

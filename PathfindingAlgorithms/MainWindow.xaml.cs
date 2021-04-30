@@ -32,21 +32,7 @@ namespace PathfindingAlgorithms
             Loaded += delegate
             {
                 env = new Grid(GridCanvas, new int[] { 20, 10 });
-                env.Initialize();
-             
-
-                /*
-                Node[] path = new Node[]
-                {
-                    env.Nodes[env.CoordsToIndex(1, 1)],
-                    env.Nodes[env.CoordsToIndex(2, 1)],
-                    env.Nodes[env.CoordsToIndex(3, 1)],
-                    env.Nodes[env.CoordsToIndex(3, 2)],
-                    env.Nodes[env.CoordsToIndex(4, 3)],
-                };
-                //env.DrawPath(path);
-                */
-     
+                env.Initialize();   
             };
         }
 
@@ -62,9 +48,9 @@ namespace PathfindingAlgorithms
         {
             env.Clear();
             env.RemovePaths();
-            Node startNode = env.Nodes[env.CoordsToIndex(10, 5)];
+            Node startNode = env.Nodes[env.CoordsToIndex(1, 1)];
             startNode.MarkAs(Brushes.Blue);
-            Node endNode = env.Nodes[env.CoordsToIndex(1, 1)];
+            Node endNode = env.Nodes[env.CoordsToIndex(10, 5)];
             endNode.MarkAs(Brushes.Blue);
             alg = new BFS(startNode, endNode, env.Nodes.Count);
 

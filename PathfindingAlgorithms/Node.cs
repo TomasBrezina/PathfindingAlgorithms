@@ -11,12 +11,17 @@ namespace PathfindingAlgorithms
 {
     public static class NodeBrushes
     {
+        public static SolidColorBrush Start = Brushes.Blue;
+        public static SolidColorBrush End = Brushes.Green;
+
         public static SolidColorBrush Default = Brushes.White;
         public static SolidColorBrush Visited = Brushes.DarkGray;
         public static SolidColorBrush Observed = Brushes.LightGray;
     }
-    public enum NodeTypes
+    public enum NodeType
     {
+        Start,
+        End,
         Empty,
         Wall,
     }
@@ -37,12 +42,14 @@ namespace PathfindingAlgorithms
         public int ID;
         public double[] Pos;
         public List<Edge> Edges;
+        public NodeType Type;
 
         protected Node(int id, double[] pos)
         {
             ID = id;
             Pos = pos;
             Edges = new List<Edge>();
+            Type = NodeType.Empty;
         }
         public virtual void Clear() { }
         public virtual void MarkAs(Brush b) { }
@@ -62,8 +69,8 @@ namespace PathfindingAlgorithms
             Rect.Fill = NodeBrushes.Default;
             Rect.Stroke = Brushes.Gray;
             Rect.StrokeThickness = 0.5;
-            Rect.MouseLeftButtonDown += Rect_MouseLeftButtonDown;
-            Rect.MouseRightButtonDown += Rect_MouseRightButtonDown;
+            Rect.PreviewMouseLeftButtonDown += Rect_MouseLeftButtonDown;
+            Rect.PreviewMouseRightButtonDown += Rect_MouseRightButtonDown;
         }
         public override void MarkAs(Brush b)
         {
