@@ -9,21 +9,28 @@ using System.Windows.Shapes;
 
 namespace PathfindingAlgorithms
 {
-    public static class NodeBrushes
-    {
-        public static SolidColorBrush Start = Brushes.Blue;
-        public static SolidColorBrush End = Brushes.Green;
-
-        public static SolidColorBrush Default = Brushes.White;
-        public static SolidColorBrush Visited = Brushes.DarkGray;
-        public static SolidColorBrush Observed = Brushes.LightGray;
-    }
     public enum NodeType
     {
         Start,
         End,
         Empty,
         Wall,
+    }
+    public static class NodeBrushes
+    {
+        public static SolidColorBrush Start = Brushes.Green;
+        public static SolidColorBrush End = Brushes.Red;
+        public static SolidColorBrush Wall = Brushes.Black;
+        public static SolidColorBrush Default = Brushes.White;
+        public static SolidColorBrush Visited = Brushes.DarkGray;
+        public static SolidColorBrush Observed = Brushes.LightGray;
+
+        public static Dictionary<NodeType, SolidColorBrush> FromType = new Dictionary<NodeType, SolidColorBrush> {
+            {NodeType.Start, NodeBrushes.Start},
+            {NodeType.End, NodeBrushes.End},
+            {NodeType.Empty, NodeBrushes.Default},
+            {NodeType.Wall, NodeBrushes.Wall}
+        };
     }
 
     public class Edge
@@ -53,6 +60,11 @@ namespace PathfindingAlgorithms
         }
         public virtual void Clear() { }
         public virtual void MarkAs(Brush b) { }
+        public void MarkAs(NodeType type)
+        {
+            Type = type;
+            MarkAs(NodeBrushes.FromType[type]);
+        }
 
         // Add neighbour and weight to Neigbours list 
         public void AddEdge(Node node, float weight)
@@ -69,8 +81,7 @@ namespace PathfindingAlgorithms
             Rect.Fill = NodeBrushes.Default;
             Rect.Stroke = Brushes.Gray;
             Rect.StrokeThickness = 0.5;
-            Rect.PreviewMouseLeftButtonDown += Rect_MouseLeftButtonDown;
-            Rect.PreviewMouseRightButtonDown += Rect_MouseRightButtonDown;
+            //Rect.PreviewMouseLeftButtonDown += Rect_MouseLeftButtonDown;
         }
         public override void MarkAs(Brush b)
         {
@@ -80,13 +91,8 @@ namespace PathfindingAlgorithms
         private void Rect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Rectangle rect = sender as Rectangle;
-            rect.Fill = Brushes.Red;
+            MarkAs(MainViewModel.SelectedNodeType);
         }
 
-        private void Rect_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            Rectangle rect = sender as Rectangle;
-            rect.Fill = Brushes.White;
-        }
     }
 }

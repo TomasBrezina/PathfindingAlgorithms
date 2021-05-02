@@ -22,12 +22,17 @@ namespace PathfindingAlgorithms
     public partial class MainWindow : Window
     {
         Enviroment env;
-        BFS alg;
+        Algorithm alg;
         DispatcherTimer stepTimer;
-
+        MainViewModel MVM = new MainViewModel();
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = MVM;
+            stepTimer = new DispatcherTimer();
+            stepTimer.Interval = TimeSpan.FromMilliseconds(20);
+            stepTimer.Tick += new EventHandler(Step);
 
             Loaded += delegate
             {
@@ -38,26 +43,36 @@ namespace PathfindingAlgorithms
 
         public void Step(object sender, EventArgs e)
         {
-            if (alg.Step())
+            Console.WriteLine(MainViewModel.SelectedNodeType);
+            if (!alg.PathFound)
             {
+                alg.Step(); 
+            }
+            else
+            {
+                Console.WriteLine();
                 stepTimer.Stop();
-                env.DrawPath(alg.FindPath());
-            } 
+            }
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void StopButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (stepTimer.IsEnabled) stepTimer.Stop();
+            else stepTimer.Start();
+        }
+        private void RunButton_Click(object sender, RoutedEventArgs e)
         {
             env.Clear();
             env.RemovePaths();
-            Node startNode = env.Nodes[env.CoordsToIndex(1, 1)];
+
+            Node startNode = env.Nodes[1];
             startNode.MarkAs(Brushes.Blue);
-            Node endNode = env.Nodes[env.CoordsToIndex(10, 5)];
+            Node endNode = env.Nodes[20];
             endNode.MarkAs(Brushes.Blue);
             alg = new BFS(startNode, endNode, env.Nodes.Count);
+            env.AddPath(alg.Path);
 
-            stepTimer = new DispatcherTimer();
-            stepTimer.Interval = TimeSpan.FromMilliseconds(20);
-            stepTimer.Tick += new EventHandler(Step);
             stepTimer.Start();
         }
     }
+
 }

@@ -13,12 +13,18 @@ namespace PathfindingAlgorithms
         protected Node EndNode;
         protected int V; // Number of nodes
 
+        public Path Path;
+        public bool PathExists = false;
+        public bool PathFound = false;
+
         public Algorithm(Node startNode, Node endNode, int v)
         {
             StartNode = startNode;
             EndNode = endNode;
             V = v;
+            Path = new Path();
         }
+        public abstract void Step();
     }
 
     /*
@@ -28,33 +34,34 @@ namespace PathfindingAlgorithms
     */
     public class BFS : Algorithm
     {
-        public bool[] Visited;
-        public int[] Pred;
-        public Queue<Node> Queue;
+        private bool[] Visited;
+        private Node[] Pred;
+        private Queue<Node> Queue;
 
         public BFS(Node startNode, Node endNode, int v) : base(startNode, endNode, v)
         {
             // Initialization
             Queue = new Queue<Node>();
             Visited = new bool[v];
-            Pred = new int[v];
+            Pred = new Node[v];
 
             // Fill values
             for (int i = 0; i < v; i++)
             {
                 Visited[i] = false;
-                Pred[i] = -1;
             }
 
             // Add start node to the queue
             Queue.Enqueue(startNode);
             Visited[startNode.ID] = true;
         }
-        public void Run()
+        public override void Step()
         {
-
+            if(!PathExists) SearchStep(); 
+            else PathStep(); // If End node is already visited
         }
-        public bool Step()
+        // Searching trought graph
+        private void SearchStep()
         {
             if (Queue.Count > 0) // While not empty
             {
@@ -67,25 +74,29 @@ namespace PathfindingAlgorithms
                     {
                         nextNode.MarkAs(NodeBrushes.Observed);
                         Visited[nextNode.ID] = true; // Mark node as visited
-                        Pred[nextNode.ID] = node.ID; // Set predecessor 
+                        Pred[nextNode.ID] = node; // Set predecessor 
                         Queue.Enqueue(nextNode); // Add node to queue
-                        if (nextNode.ID == EndNode.ID) return true; // If reached end
+                        if (nextNode.ID == EndNode.ID)
+                        {
+                            PathExists = true; // If reached end node
+                            Path.Add(EndNode); // Add end node to path
+                        }
                     }
                 }
             }
-            return false;
         }
-        public List<int> FindPath()
+        // Backtracking for path if reached both start and end node
+        private void PathStep()
         {
-            List<int> path = new List<int>();
-            int index = EndNode.ID;
-            while (index != StartNode.ID)
+            if(PathExists)
             {
-                index = Pred[index];
-                path.Add(index);
+                int id = Path.Last().ID;
+                if (id != StartNode.ID)
+                {
+                    Path.Add(Pred[id]);
+                }
+                else PathFound = true;
             }
-            path.Reverse();
-            return path;
         }
     }
 }

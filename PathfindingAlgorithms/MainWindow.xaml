@@ -5,51 +5,67 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PathfindingAlgorithms"
         mc:Ignorable="d"
-    
         Title="MainWindow" Height="500" Width="800" ResizeMode="NoResize" Background="#eee">
+
     <Grid Margin="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="6*"/>
+            <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
 
-        <DockPanel>
-            <ToolBarTray ToolBarTray.IsLocked="True" Background="#eee" Grid.Row="0" >
-                <ToolBar Height="30" Background="#eee">
-                    <Button ToolBar.OverflowMode="Never" Margin="5,0" Click="Button_Click" ToolTip="Run selected algorithm.">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="images/play.png" />
-                            <TextBlock VerticalAlignment="Center" Margin="3,0,0,0">Run</TextBlock>
-                        </StackPanel>
-                    </Button>
-                    <Separator/>
-                    <Button ToolBar.OverflowMode="Never" Margin="5,0" Command="Paste" ToolTip="Paste from Windows Clipboard.">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="images/pause.png" />
-                            <TextBlock VerticalAlignment="Center" Margin="3,0,0,0">Pause</TextBlock>
-                        </StackPanel>
-                    </Button>
-                    <Separator/>
-                    <Button ToolBar.OverflowMode="Never" Margin="5,0" Command="Paste" ToolTip="Paste from Windows Clipboard.">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="images/stop.png" />
-                            <TextBlock VerticalAlignment="Center" Margin="3,0,0,0">Stop</TextBlock>
-                        </StackPanel>
-                    </Button>
-                </ToolBar>
-                <ToolBar Height="30" Background="#eee">
-                    <ComboBox>
-                        <ComboBoxItem IsSelected="True">Depth First Search</ComboBoxItem>
-                        <ComboBoxItem>Breadth First Search</ComboBoxItem>
-                        <ComboBoxItem>Dijstras</ComboBoxItem>
-                        <ComboBoxItem>A star</ComboBoxItem>
-                    </ComboBox>
-                    <Button Margin="5,0" Command="Paste" ToolTip="Paste from Windows Clipboard.">
-                        <Image Source="images/book-question.png" />
-                    </Button>
-                </ToolBar>
-            </ToolBarTray>
-        </DockPanel>
+        <ToolBarTray ClipToBounds="True" Background="#eee" Grid.Row="0" >
+            <ToolBar ToolBarTray.IsLocked="True" Height="30" Background="#eee">
+                <Button ToolBar.OverflowMode="Never" Margin="5,0" Click="RunButton_Click" ToolTip="Run selected algorithm.">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="images/play.png" />
+                        <TextBlock VerticalAlignment="Center" Margin="3,0,0,0">Run</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Separator/>
+                <Button ToolBar.OverflowMode="Never" Margin="5,0" Click="StopButton_Click" ToolTip="Pause the algorithm.">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="images/pause.png" />
+                        <TextBlock VerticalAlignment="Center" Margin="3,0,0,0">Pause</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Separator/>
+                <Button ToolBar.OverflowMode="Never" Margin="5,0" Command="Paste" ToolTip="Paste from Windows Clipboard.">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="images/stop.png" />
+                        <TextBlock VerticalAlignment="Center" Margin="3,0,0,0">Stop</TextBlock>
+                    </StackPanel>
+                </Button>
+            </ToolBar>
+            <ToolBar Height="30" Background="#eee">
+                <ComboBox Margin="5,0">
+                    <ComboBoxItem IsSelected="True">Depth First Search</ComboBoxItem>
+                    <ComboBoxItem>Breadth First Search</ComboBoxItem>
+                    <ComboBoxItem>Dijstras</ComboBoxItem>
+                    <ComboBoxItem>A star</ComboBoxItem>
+                </ComboBox>
+                <Button Margin="5,0" ToolTip="Paste from Windows Clipboard.">
+                    <Image Source="images/book-question.png" />
+                </Button>
+            </ToolBar>
+
+            <ToolBar Height="30" Background="#eee">
+                <ToolBar.Resources>
+                    <local:ComparisonConverter x:Key="ComparisonConverter" />
+                </ToolBar.Resources>
+                <RadioButton IsChecked="{Binding Path=SelectedNodeType, Mode=TwoWay, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static local:NodeType.Start}}">
+                    <Image Source="images/flag-start.png" Margin="5,0" />
+                </RadioButton>
+                <RadioButton IsChecked="{Binding Path=SelectedNodeType, Mode=TwoWay, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static local:NodeType.End}}">
+                    <Image Source="images/flag-end.png" Margin="5,0" />
+                </RadioButton>
+                <RadioButton IsChecked="{Binding Path=SelectedNodeType, Mode=TwoWay, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static local:NodeType.Wall}}">
+                    <Image Source="images/wall.png"  Margin="5,0" />
+                </RadioButton>
+                <RadioButton IsChecked="{Binding Path=SelectedNodeType, Mode=TwoWay, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static local:NodeType.Empty}}">
+                    <Image Source="images/eraser.png" Margin="5,0" />
+                </RadioButton>
+            </ToolBar>
+        </ToolBarTray>
 
         <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="GridCanvas" Grid.Row="1" Grid.Column="0">
             

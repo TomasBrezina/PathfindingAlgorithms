@@ -56,7 +56,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Algorithms.cs" />
+    <Compile Include="Path.cs" />
     <Compile Include="Tools.cs" />
+    <Compile Include="MainViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -103,6 +105,22 @@
     <Resource Include="images\pause.png" />
     <Resource Include="images\stop.png" />
     <Resource Include="images\play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\book-question.png" />
+    <Resource Include="images\question-white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\flag-start.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\wall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\flag-end.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\eraser.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -13,29 +13,41 @@ namespace PathfindingAlgorithms
 {
     abstract class Enviroment
     {
+        public Node StartNode;
+        public Node EndNode;
         public List<Node> Nodes;
-        protected List<Polyline> Paths;
+        protected List<Path> Paths;
         protected Canvas Canv;
 
         public Enviroment(Canvas canv)
         {
-            Paths = new List<Polyline>();
+            Paths = new List<Path>();
             Nodes = new List<Node>();
             Canv = canv;
         }
+        public abstract int CoordsToIndex(int x, int y);
+        public abstract int ScreenCoordsToIndex(double x, double y);
 
         public abstract void Initialize();
-        public abstract void Clear();
-        public abstract int CoordsToIndex(int x, int y);
-        public abstract void DrawPath(List<Node> path);
-        public abstract void DrawPath(List<int> path);
+        protected abstract void OnMouseDown(object sender, MouseButtonEventArgs e);
+
+        public void Clear()
+        {
+            foreach (Node node in Nodes) node.MarkAs(NodeType.Empty);
+        }
+        public void AddPath(Path path)
+        {
+            Paths.Add(path);
+            Canv.Children.Add(path.Polyline);
+        }
 
         public void RemovePaths()
         {
-            foreach (Polyline path in Paths)
+            foreach (Path path in Paths)
             {
-                Canv.Children.Remove(path);
+                Canv.Children.Remove(path.Polyline);
             }
+            Paths.Clear();
         }
     }
 
@@ -49,15 +61,12 @@ namespace PathfindingAlgorithms
         {
             Shape = shape;
         }
-        public override int CoordsToIndex(int x, int y)
-        {
-            return x + (y * Shape[0]);
-        }
+
         public override void Initialize()
         {
             RectHeight = Canv.ActualHeight / Shape[1];
             RectWidth = Canv.ActualWidth / Shape[0];
-            
+
             int index = 0;
             for (int j = 0; j < Shape[1]; j++)
             {
@@ -65,9 +74,9 @@ namespace PathfindingAlgorithms
                 {
                     GridNode node = new GridNode(
                         index,
-                        new double[2] { 
-                            (i * RectWidth) + (RectWidth / 2), 
-                            (j * RectHeight) + (RectHeight / 2) 
+                        new double[2] {
+                            (i * RectWidth) + (RectWidth / 2),
+                            (j * RectHeight) + (RectHeight / 2)
                         },
                         new Rectangle
                         {
@@ -76,8 +85,9 @@ namespace PathfindingAlgorithms
                         }
                     );
                     Nodes.Add(node);
-                    Canv.Children.Add(node.Rect);
-                    Canvas.SetLeft(node.Rect, (i * RectWidth));
+                    node.Rect.MouseDown += OnMouseDown; // add event handler
+                    Canv.Children.Add(node.Rect); // add rect to canvas
+                    Canvas.SetLeft(node.Rect, (i * RectWidth)); 
                     Canvas.SetTop(node.Rect, (j * RectHeight));
                     index += 1;
                 }
@@ -90,7 +100,7 @@ namespace PathfindingAlgorithms
             {
                 for (int j = 0; j < Shape[1]; j++)
                 {
-                    int[][] shifts = new int[4][] { new int[]{-1, 0}, new int[] { -1, -1}, new int[] { 0, -1}, new int[] { 1, -1}};
+                    int[][] shifts = new int[4][] { new int[] { -1, 0 }, new int[] { -1, -1 }, new int[] { 0, -1 }, new int[] { 1, -1 } };
                     float[] weights = new float[] { 1, 1.4f, 1, 1.4f };
                     for (int shiftIndex = 0; shiftIndex < shifts.Length; shiftIndex++)
                     {
@@ -107,35 +117,25 @@ namespace PathfindingAlgorithms
                 }
             }
         }
-        public override void Clear()
+        // convert 2d coordinates to list index of a node
+        public override int CoordsToIndex(int x, int y)
         {
-            foreach (Node node in Nodes) node.MarkAs(NodeBrushes.Default);
+            return x + (y * Shape[0]);
         }
-        public override void DrawPath(List<Node> path)
+        // convert on-screen coordinates to index of node
+        public override int ScreenCoordsToIndex(double x, double y)
         {
-            PointCollection pointsCollection = new PointCollection();
-            foreach (var node in path)
-            {
-                pointsCollection.Add(new Point(
-                    node.Pos[0],
-                    node.Pos[1]
-                ));
-            }
-            Polyline polyline = new Polyline
-            {
-                StrokeThickness = 5,
-                Stroke = Brushes.Black,
-                Points = pointsCollection
-            };
-            Paths.Add(polyline);
-            Canv.Children.Add(polyline);
+            int xi = (int)Math.Round(x / RectWidth);
+            int yi = (int)Math.Round(y / RectHeight);
+            return CoordsToIndex(xi, yi);
         }
-        public override void DrawPath(List<int> path)
+        protected override void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            List<Node> nodes = new List<Node>();
-            foreach (int index in path) nodes.Add(Nodes[index]);
-            DrawPath(nodes);
+            
+            Rectangle rect = sender as Rectangle;
+            int nodeIndex = ScreenCoordsToIndex(Canvas.GetLeft(rect), Canvas.GetTop(rect)); //convert coordinates to node
+            Node node = Nodes[nodeIndex];
+            node.MarkAs(MainViewModel.SelectedNodeType);
         }
-
     }
 }
