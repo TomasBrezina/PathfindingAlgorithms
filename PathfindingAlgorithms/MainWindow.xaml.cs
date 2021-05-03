@@ -43,14 +43,12 @@ namespace PathfindingAlgorithms
 
         public void Step(object sender, EventArgs e)
         {
-            Console.WriteLine(MainViewModel.SelectedNodeType);
             if (!alg.PathFound)
             {
                 alg.Step(); 
             }
             else
             {
-                Console.WriteLine();
                 stepTimer.Stop();
             }
         }
@@ -61,17 +59,20 @@ namespace PathfindingAlgorithms
         }
         private void RunButton_Click(object sender, RoutedEventArgs e)
         {
-            env.Clear();
-            env.RemovePaths();
+            
+            if (env.StartNode != null && env.EndNode != null)
+            {
+                env.Clear();
+                env.RemovePaths();
 
-            Node startNode = env.Nodes[1];
-            startNode.MarkAs(Brushes.Blue);
-            Node endNode = env.Nodes[20];
-            endNode.MarkAs(Brushes.Blue);
-            alg = new BFS(startNode, endNode, env.Nodes.Count);
-            env.AddPath(alg.Path);
+                alg = new BFS(env.StartNode, env.Nodes.Count);
+                env.AddPath(alg.Path);
 
-            stepTimer.Start();
+                stepTimer.Start();
+            } else
+            {
+                MessageBox.Show("Start and end have to be selected!", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
     }
 

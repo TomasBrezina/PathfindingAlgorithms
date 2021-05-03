@@ -15,6 +15,7 @@ namespace PathfindingAlgorithms
     {
         public Node StartNode;
         public Node EndNode;
+
         public List<Node> Nodes;
         protected List<Path> Paths;
         protected Canvas Canv;
@@ -30,17 +31,43 @@ namespace PathfindingAlgorithms
 
         public abstract void Initialize();
         protected abstract void OnMouseDown(object sender, MouseButtonEventArgs e);
-
+        protected void SetType(Node node, NodeType type)
+        {
+            switch (node.Type)
+            {
+                case NodeType.Start:
+                    StartNode = null;
+                    break;
+                case NodeType.End:
+                    EndNode = null;
+                    break;
+            }
+            switch (type)
+            {
+                case NodeType.Start:
+                    if (StartNode != null) StartNode.SetDefaultType();
+                    node.SetType(type);
+                    StartNode = node;
+                    break;
+                case NodeType.End:
+                    if (EndNode != null) EndNode.SetDefaultType();
+                    node.SetType(type);
+                    EndNode = node;
+                    break;
+                default:
+                    node.SetType(type);
+                    break;
+            }  
+        }
         public void Clear()
         {
-            foreach (Node node in Nodes) node.MarkAs(NodeType.Empty);
+            foreach (Node node in Nodes) node.SetState(NodeState.Unseen);
         }
         public void AddPath(Path path)
         {
             Paths.Add(path);
             Canv.Children.Add(path.Polyline);
         }
-
         public void RemovePaths()
         {
             foreach (Path path in Paths)
@@ -131,11 +158,10 @@ namespace PathfindingAlgorithms
         }
         protected override void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            
             Rectangle rect = sender as Rectangle;
             int nodeIndex = ScreenCoordsToIndex(Canvas.GetLeft(rect), Canvas.GetTop(rect)); //convert coordinates to node
             Node node = Nodes[nodeIndex];
-            node.MarkAs(MainViewModel.SelectedNodeType);
+            SetType(node, MainViewModel.SelectedNodeType);
         }
     }
 }

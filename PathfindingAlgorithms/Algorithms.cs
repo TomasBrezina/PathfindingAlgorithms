@@ -10,17 +10,15 @@ namespace PathfindingAlgorithms
     public abstract class Algorithm
     {
         protected Node StartNode;
-        protected Node EndNode;
         protected int V; // Number of nodes
 
         public Path Path;
         public bool PathExists = false;
         public bool PathFound = false;
 
-        public Algorithm(Node startNode, Node endNode, int v)
+        public Algorithm(Node startNode, int v)
         {
             StartNode = startNode;
-            EndNode = endNode;
             V = v;
             Path = new Path();
         }
@@ -34,26 +32,18 @@ namespace PathfindingAlgorithms
     */
     public class BFS : Algorithm
     {
-        private bool[] Visited;
         private Node[] Pred;
         private Queue<Node> Queue;
 
-        public BFS(Node startNode, Node endNode, int v) : base(startNode, endNode, v)
+        public BFS(Node startNode, int v) : base(startNode, v)
         {
             // Initialization
             Queue = new Queue<Node>();
-            Visited = new bool[v];
             Pred = new Node[v];
-
-            // Fill values
-            for (int i = 0; i < v; i++)
-            {
-                Visited[i] = false;
-            }
 
             // Add start node to the queue
             Queue.Enqueue(startNode);
-            Visited[startNode.ID] = true;
+            startNode.SetState(NodeState.Visited);
         }
         public override void Step()
         {
@@ -66,20 +56,19 @@ namespace PathfindingAlgorithms
             if (Queue.Count > 0) // While not empty
             {
                 Node node = Queue.Dequeue();
-                node.MarkAs(NodeBrushes.Visited);
+                node.SetState(NodeState.Visited);
                 foreach (Edge edge in node.Edges)
                 {
                     Node nextNode = edge.Node;
-                    if (!Visited[nextNode.ID])
+                    if (nextNode.Type != NodeType.Wall && nextNode.State == NodeState.Unseen)
                     {
-                        nextNode.MarkAs(NodeBrushes.Observed);
-                        Visited[nextNode.ID] = true; // Mark node as visited
+                        nextNode.SetState(NodeState.Revealed);
                         Pred[nextNode.ID] = node; // Set predecessor 
                         Queue.Enqueue(nextNode); // Add node to queue
-                        if (nextNode.ID == EndNode.ID)
+                        if (nextNode.Type == NodeType.End)
                         {
                             PathExists = true; // If reached end node
-                            Path.Add(EndNode); // Add end node to path
+                            Path.Add(nextNode); // Add end node to path
                         }
                     }
                 }

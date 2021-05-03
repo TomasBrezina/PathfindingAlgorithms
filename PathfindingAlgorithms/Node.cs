@@ -9,35 +9,10 @@ using System.Windows.Shapes;
 
 namespace PathfindingAlgorithms
 {
-    public enum NodeType
-    {
-        Start,
-        End,
-        Empty,
-        Wall,
-    }
-    public static class NodeBrushes
-    {
-        public static SolidColorBrush Start = Brushes.Green;
-        public static SolidColorBrush End = Brushes.Red;
-        public static SolidColorBrush Wall = Brushes.Black;
-        public static SolidColorBrush Default = Brushes.White;
-        public static SolidColorBrush Visited = Brushes.DarkGray;
-        public static SolidColorBrush Observed = Brushes.LightGray;
-
-        public static Dictionary<NodeType, SolidColorBrush> FromType = new Dictionary<NodeType, SolidColorBrush> {
-            {NodeType.Start, NodeBrushes.Start},
-            {NodeType.End, NodeBrushes.End},
-            {NodeType.Empty, NodeBrushes.Default},
-            {NodeType.Wall, NodeBrushes.Wall}
-        };
-    }
-
     public class Edge
     {
         public Node Node;
         public float Weight;
-
         public Edge(Node toNode, float weight)
         {
             Node = toNode;
@@ -50,6 +25,7 @@ namespace PathfindingAlgorithms
         public double[] Pos;
         public List<Edge> Edges;
         public NodeType Type;
+        public NodeState State;
 
         protected Node(int id, double[] pos)
         {
@@ -57,10 +33,22 @@ namespace PathfindingAlgorithms
             Pos = pos;
             Edges = new List<Edge>();
             Type = NodeType.Empty;
+            State = NodeState.Unseen;
         }
-        public virtual void Clear() { }
         public virtual void MarkAs(Brush b) { }
-        public void MarkAs(NodeType type)
+        public void SetDefaultState() { SetState(NodeState.Unseen); }
+        public void SetDefaultType() { SetType(NodeType.Empty); }
+
+        // Set state of the node
+        public void SetState(NodeState state) {
+            State = state;
+            if (Type == NodeType.Empty)
+            {
+                MarkAs(NodeBrushes.FromState[state]);
+            }
+        }
+        // Set type of the node
+        public void SetType(NodeType type)
         {
             Type = type;
             MarkAs(NodeBrushes.FromType[type]);
@@ -78,21 +66,10 @@ namespace PathfindingAlgorithms
         public GridNode(int id, double[] pos, Rectangle rect) : base(id, pos)
         { 
             Rect = rect;
-            Rect.Fill = NodeBrushes.Default;
+            Rect.Fill = NodeBrushes.Empty;
             Rect.Stroke = Brushes.Gray;
             Rect.StrokeThickness = 0.5;
-            //Rect.PreviewMouseLeftButtonDown += Rect_MouseLeftButtonDown;
         }
-        public override void MarkAs(Brush b)
-        {
-            Rect.Fill = b;
-        }
-
-        private void Rect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            Rectangle rect = sender as Rectangle;
-            MarkAs(MainViewModel.SelectedNodeType);
-        }
-
+        public override void MarkAs(Brush b) { Rect.Fill = b; }
     }
 }

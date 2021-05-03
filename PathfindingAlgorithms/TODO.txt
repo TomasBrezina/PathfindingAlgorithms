@@ -1,0 +1,1 @@
+﻿- Add 3 state (true, false, not sure) Enum for PathExists
