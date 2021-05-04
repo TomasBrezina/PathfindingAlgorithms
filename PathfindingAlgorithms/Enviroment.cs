@@ -87,6 +87,13 @@ namespace PathfindingAlgorithms
         public Grid(Canvas canv, int[] shape) : base(canv)
         {
             Shape = shape;
+            Initialize();
+
+            StartNode = Nodes.First();
+            EndNode = Nodes.Last();
+
+            StartNode.SetType(NodeType.Start);
+            EndNode.SetType(NodeType.End);
         }
 
         public override void Initialize()

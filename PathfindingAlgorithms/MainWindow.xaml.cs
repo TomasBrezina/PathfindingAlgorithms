@@ -21,55 +21,64 @@ namespace PathfindingAlgorithms
     /// </summary>
     public partial class MainWindow : Window
     {
-        Enviroment env;
-        Algorithm alg;
-        DispatcherTimer stepTimer;
+        Enviroment Env;
+        Algorithm Alg;
+        DispatcherTimer Timer;
         MainViewModel MVM = new MainViewModel();
         public MainWindow()
         {
             InitializeComponent();
 
             DataContext = MVM;
-            stepTimer = new DispatcherTimer();
-            stepTimer.Interval = TimeSpan.FromMilliseconds(20);
-            stepTimer.Tick += new EventHandler(Step);
+            MVM.IsRunning = false;
+
+
+            Timer = new DispatcherTimer();
+            Timer.Interval = TimeSpan.FromMilliseconds(20);
+            Timer.Tick += new EventHandler(Step);
 
             Loaded += delegate
             {
-                env = new Grid(GridCanvas, new int[] { 20, 10 });
-                env.Initialize();   
+                Env = new Grid(GridCanvas, new int[] { 20, 10 });
             };
         }
 
         public void Step(object sender, EventArgs e)
         {
-            if (!alg.PathFound)
+            if (!Alg.PathFound)
             {
-                alg.Step(); 
+                Alg.Step();
             }
             else
             {
-                stepTimer.Stop();
+                Timer.Stop();
             }
+        }
+        private void PlayPauseButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Timer.IsEnabled) Timer.Stop();
+            else Timer.Start();
         }
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
-            if (stepTimer.IsEnabled) stepTimer.Stop();
-            else stepTimer.Start();
+            MVM.IsRunning = false;
+            Env.Clear();
+            Env.RemovePaths();
+            Timer.Stop();
         }
-        private void RunButton_Click(object sender, RoutedEventArgs e)
+        private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            
-            if (env.StartNode != null && env.EndNode != null)
+            Console.WriteLine(MVM.SelectedAlgorithm);
+
+            if (Env.StartNode != null && Env.EndNode != null)
             {
-                env.Clear();
-                env.RemovePaths();
-
-                alg = new BFS(env.StartNode, env.Nodes.Count);
-                env.AddPath(alg.Path);
-
-                stepTimer.Start();
-            } else
+                MVM.IsRunning = true;
+                Env.Clear();
+                Env.RemovePaths();
+                Alg = Tools.AlgorithmFromString(MVM.SelectedAlgorithm, Env.StartNode, Env.Nodes);
+                Env.AddPath(Alg.Path);
+                Timer.Start();
+            } else 
             {
                 MessageBox.Show("Start and end have to be selected!", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
             }

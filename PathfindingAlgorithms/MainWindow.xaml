@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PathfindingAlgorithms"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="800" ResizeMode="NoResize" Background="#eee">
+        Title="MainWindow" Height="500" Width="800" ResizeMode="CanResize" Background="#eee">
 
     <Grid Margin="15">
         <Grid.RowDefinitions>
@@ -15,21 +15,36 @@
 
         <ToolBarTray ClipToBounds="True" Background="#eee" Grid.Row="0" >
             <ToolBar ToolBarTray.IsLocked="True" Height="30" Background="#eee">
-                <Button ToolBar.OverflowMode="Never" Margin="5,0" Click="RunButton_Click" ToolTip="Run selected algorithm.">
+                <ToolBar.Resources>
+                    <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+                </ToolBar.Resources>
+                <Button ToolBar.OverflowMode="Never" IsEnabled="{Binding Path=IsRunning, Converter={StaticResource InverseBooleanConverter}}" Margin="5,0" Click="StartButton_Click" ToolTip="Start the algorithm.">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="images/play.png" />
-                        <TextBlock VerticalAlignment="Center" Margin="3,0,0,0">Run</TextBlock>
+                        <Image Source="images/start.png" />
+                        <TextBlock VerticalAlignment="Center" Margin="3,0,0,0">Start</TextBlock>
                     </StackPanel>
                 </Button>
                 <Separator/>
-                <Button ToolBar.OverflowMode="Never" Margin="5,0" Click="StopButton_Click" ToolTip="Pause the algorithm.">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="images/pause.png" />
-                        <TextBlock VerticalAlignment="Center" Margin="3,0,0,0">Pause</TextBlock>
-                    </StackPanel>
-                </Button>
+                <ToggleButton Name="PlayPauseButton" IsEnabled="{Binding Path=IsRunning, Mode=TwoWay}" Click="PlayPauseButton_Click" >
+                    <ToggleButton.Resources>
+                        <Image Source="images/play.png" x:Key="Play"/>
+                        <Image Source="images/pause.png" x:Key="Pause"/>
+                    </ToggleButton.Resources>
+                    <ToggleButton.Style>
+                        <Style TargetType="{x:Type ToggleButton}">
+                            <Style.Triggers>
+                                <Trigger Property="IsChecked" Value="true">
+                                    <Setter Property="Content" Value="{StaticResource Play}" />
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="false">
+                                    <Setter Property="Content" Value="{StaticResource Pause}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ToggleButton.Style>
+                </ToggleButton>
                 <Separator/>
-                <Button ToolBar.OverflowMode="Never" Margin="5,0" Command="Paste" ToolTip="Paste from Windows Clipboard.">
+                <Button IsEnabled="{Binding Path=IsRunning, Mode=TwoWay}" ToolBar.OverflowMode="Never" Margin="5,0" Click="StopButton_Click" ToolTip="Stop the algorithm.">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="images/stop.png" />
                         <TextBlock VerticalAlignment="Center" Margin="3,0,0,0">Stop</TextBlock>
@@ -37,12 +52,7 @@
                 </Button>
             </ToolBar>
             <ToolBar Height="30" Background="#eee">
-                <ComboBox Margin="5,0">
-                    <ComboBoxItem IsSelected="True">Depth First Search</ComboBoxItem>
-                    <ComboBoxItem>Breadth First Search</ComboBoxItem>
-                    <ComboBoxItem>Dijstras</ComboBoxItem>
-                    <ComboBoxItem>A star</ComboBoxItem>
-                </ComboBox>
+                <ComboBox Margin="5,0" SelectedIndex="0" SelectedItem="{Binding SelectedAlgorithm}" ItemsSource="{Binding AlgorithmsList}"/>
                 <Button Margin="5,0" ToolTip="Paste from Windows Clipboard.">
                     <Image Source="images/book-question.png" />
                 </Button>

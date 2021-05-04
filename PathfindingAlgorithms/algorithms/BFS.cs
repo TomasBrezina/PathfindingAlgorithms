@@ -3,28 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Media;
 
 namespace PathfindingAlgorithms
 {
-    public abstract class Algorithm
-    {
-        protected Node StartNode;
-        protected int V; // Number of nodes
-
-        public Path Path;
-        public bool PathExists = false;
-        public bool PathFound = false;
-
-        public Algorithm(Node startNode, int v)
-        {
-            StartNode = startNode;
-            V = v;
-            Path = new Path();
-        }
-        public abstract void Step();
-    }
-
     /*
     Breadth First Search
     Unweighted
@@ -35,11 +16,11 @@ namespace PathfindingAlgorithms
         private Node[] Pred;
         private Queue<Node> Queue;
 
-        public BFS(Node startNode, int v) : base(startNode, v)
+        public BFS(Node startNode, List<Node> graph) : base(startNode, graph)
         {
             // Initialization
             Queue = new Queue<Node>();
-            Pred = new Node[v];
+            Pred = new Node[graph.Count];
 
             // Add start node to the queue
             Queue.Enqueue(startNode);
@@ -47,7 +28,7 @@ namespace PathfindingAlgorithms
         }
         public override void Step()
         {
-            if(!PathExists) SearchStep(); 
+            if (!PathExists) SearchStep();
             else PathStep(); // If End node is already visited
         }
         // Searching trought graph
@@ -77,7 +58,7 @@ namespace PathfindingAlgorithms
         // Backtracking for path if reached both start and end node
         private void PathStep()
         {
-            if(PathExists)
+            if (PathExists)
             {
                 int id = Path.Last().ID;
                 if (id != StartNode.ID)
