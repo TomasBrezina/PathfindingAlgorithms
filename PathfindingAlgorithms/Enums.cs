@@ -7,6 +7,18 @@ using System.Windows.Media;
 
 namespace PathfindingAlgorithms
 {
+    public enum RunningState
+    {
+        Algorithm,
+        WallGenerator,
+        NotRunning
+    }
+    public enum Exist
+    {
+        True,
+        False,
+        Unknown
+    }
     public enum NodeType
     {
         Start,

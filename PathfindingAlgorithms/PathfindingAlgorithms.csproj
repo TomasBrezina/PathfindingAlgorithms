@@ -62,9 +62,14 @@
     <Compile Include="algorithms\BFS.cs" />
     <Compile Include="algorithms\Dijkstra.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="enviroments\GridEnviroment.cs" />
     <Compile Include="Path.cs" />
     <Compile Include="Tools.cs" />
     <Compile Include="MainViewModel.cs" />
+    <Compile Include="wallgenerators\NoiseWallGenerator.cs" />
+    <Compile Include="wallgenerators\PrimWallGenerator.cs" />
+    <Compile Include="wallgenerators\RecursiveSubdivision.cs" />
+    <Compile Include="wallgenerators\WallGenerator.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -73,7 +78,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Enviroment.cs" />
+    <Compile Include="enviroments\Enviroment.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -133,6 +138,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\start.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="nodes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

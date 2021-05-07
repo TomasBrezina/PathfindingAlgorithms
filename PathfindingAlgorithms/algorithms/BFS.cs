@@ -28,8 +28,20 @@ namespace PathfindingAlgorithms
         }
         public override void Step()
         {
-            if (!PathExists) SearchStep();
-            else PathStep(); // If End node is already visited
+            switch(PathExists)
+            {
+                // If dont know if path exists
+                case Exist.Unknown:
+                    SearchStep();
+                    break;
+                // If reached End Node and sure about the path
+                case Exist.True:
+                    PathStep();
+                    break;
+                // If algorithm finished search and didnt found a path
+                case Exist.False:
+                    break;
+            }
         }
         // Searching trought graph
         private void SearchStep()
@@ -48,17 +60,18 @@ namespace PathfindingAlgorithms
                         Queue.Enqueue(nextNode); // Add node to queue
                         if (nextNode.Type == NodeType.End)
                         {
-                            PathExists = true; // If reached end node
+                            PathExists = Exist.True; // If reached end node
                             Path.Add(nextNode); // Add end node to path
                         }
                     }
-                }
+                }   
             }
+            else if (PathExists == Exist.Unknown) PathExists = Exist.False;
         }
         // Backtracking for path if reached both start and end node
         private void PathStep()
         {
-            if (PathExists)
+            if (PathExists == Exist.True)
             {
                 int id = Path.Last().ID;
                 if (id != StartNode.ID)

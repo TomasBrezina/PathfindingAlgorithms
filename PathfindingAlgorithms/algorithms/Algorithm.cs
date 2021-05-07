@@ -14,7 +14,7 @@ namespace PathfindingAlgorithms
         protected List<Node> Graph;
 
         public Path Path;
-        public bool PathExists = false;
+        public Exist PathExists = Exist.Unknown;
         public bool PathFound = false;
 
         public Algorithm(Node startNode, List<Node> graph)

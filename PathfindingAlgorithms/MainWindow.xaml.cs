@@ -23,35 +23,66 @@ namespace PathfindingAlgorithms
     {
         Enviroment Env;
         Algorithm Alg;
+        WallGenerator Gen;
         DispatcherTimer Timer;
         MainViewModel MVM = new MainViewModel();
+        RunningState State;
+
+
         public MainWindow()
         {
             InitializeComponent();
 
+            // Viev model            
             DataContext = MVM;
             MVM.IsRunning = false;
 
+            // State
+            State = RunningState.NotRunning;
 
+            // Timer
             Timer = new DispatcherTimer();
-            Timer.Interval = TimeSpan.FromMilliseconds(20);
+            Timer.Interval = TimeSpan.FromMilliseconds(15);
             Timer.Tick += new EventHandler(Step);
 
             Loaded += delegate
             {
-                Env = new Grid(GridCanvas, new int[] { 20, 10 });
+                StartupInitialization();
             };
         }
 
+        public void StartTimer(RunningState state)
+        {
+            Timer.Start();
+            MVM.IsRunning = true;
+            State = state;
+        }
+        public void StopTimer()
+        {
+            Timer.Stop();
+            MVM.IsRunning = false;
+            State = RunningState.NotRunning;
+        }
+        public void StartupInitialization()
+        {       
+            Env = new GridEnviroment(GridCanvas, new int[] { 26, 14 });
+            Env.StartNode = Env.Nodes.First();
+            Env.EndNode = Env.Nodes.Last();
+            Env.StartNode.SetType(NodeType.Start);
+            Env.EndNode.SetType(NodeType.End);
+        }
         public void Step(object sender, EventArgs e)
         {
-            if (!Alg.PathFound)
+            switch (State)
             {
-                Alg.Step();
-            }
-            else
-            {
-                Timer.Stop();
+                case RunningState.Algorithm:
+                    if (!Alg.PathFound && Alg.PathExists != Exist.False) Alg.Step();
+                    else StopTimer();
+                    break;
+                case RunningState.WallGenerator:
+                    if (!Gen.IsFinished) Gen.Step();
+                    else StopTimer();
+                    break;
             }
         }
         private void PlayPauseButton_Click(object sender, RoutedEventArgs e)
@@ -61,27 +92,35 @@ namespace PathfindingAlgorithms
         }
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
-            MVM.IsRunning = false;
-            Env.Clear();
+            Env.ClearState();
             Env.RemovePaths();
-            Timer.Stop();
+            StopTimer();
         }
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine(MVM.SelectedAlgorithm);
-
             if (Env.StartNode != null && Env.EndNode != null)
             {
-                MVM.IsRunning = true;
-                Env.Clear();
+                Env.ClearState(); 
                 Env.RemovePaths();
                 Alg = Tools.AlgorithmFromString(MVM.SelectedAlgorithm, Env.StartNode, Env.Nodes);
                 Env.AddPath(Alg.Path);
-                Timer.Start();
+                StartTimer(RunningState.Algorithm);
             } else 
             {
                 MessageBox.Show("Start and end have to be selected!", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+        }
+
+        private void GenerateWall_Click(object sender, RoutedEventArgs e)
+        {
+            Env.RemovePaths();
+            Env.ClearState();
+            Env.ClearWalls();
+
+            //Gen = new NoiseWallGenerator(Env, 30);
+            Gen = new RecursiveSubdivision(Env);
+            Timer.Interval = TimeSpan.FromMilliseconds(5);
+            StartTimer(RunningState.WallGenerator);
         }
     }
 

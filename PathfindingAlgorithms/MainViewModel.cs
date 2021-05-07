@@ -31,7 +31,7 @@ namespace PathfindingAlgorithms
                 return new List<string>()
                 {
                     "BFS",
-                    "Dijstra"
+                    "Dijkstra"
                 };
             }
         }
