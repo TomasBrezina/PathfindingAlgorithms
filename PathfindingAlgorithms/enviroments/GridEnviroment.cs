@@ -28,7 +28,7 @@ namespace PathfindingAlgorithms
             {
                 for (int i = 0; i < Shape[0]; i++)
                 {
-                    GridNode node = new GridNode(
+                    Node node = new Node(
                         index,
                         new double[2] {
                             (i * RectSize) + (RectSize / 2),
@@ -41,10 +41,10 @@ namespace PathfindingAlgorithms
                         }
                     );
                     Nodes.Add(node);
-                    node.Rect.MouseDown += OnMouseDown; // add event handler
-                    Canv.Children.Add(node.Rect); // add rect to canvas
-                    Canvas.SetLeft(node.Rect, (i * RectSize));
-                    Canvas.SetTop(node.Rect, (j * RectSize));
+                    node.Shape.MouseDown += OnMouseDown; // add event handler
+                    Canv.Children.Add(node.Shape); // add rect to canvas
+                    Canvas.SetLeft(node.Shape, (i * RectSize));
+                    Canvas.SetTop(node.Shape, (j * RectSize));
                     index += 1;
                 }
             }
@@ -79,16 +79,11 @@ namespace PathfindingAlgorithms
             return x + (y * Shape[0]);
         }
         // convert on-screen coordinates to index of node
-        public override int ScreenCoordsToIndex(double x, double y)
-        {
-            int xi = (int)Math.Round(x / RectSize);
-            int yi = (int)Math.Round(y / RectSize);
-            return CoordsToIndex(xi, yi);
-        }
+
         protected override void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             Rectangle rect = sender as Rectangle;
-            int nodeIndex = ScreenCoordsToIndex(Canvas.GetLeft(rect), Canvas.GetTop(rect)); //convert coordinates to node
+            int nodeIndex = (int) rect.Tag; //convert coordinates to node
             Node node = Nodes[nodeIndex];
             SetType(node, MainViewModel.SelectedNodeType);
         }
