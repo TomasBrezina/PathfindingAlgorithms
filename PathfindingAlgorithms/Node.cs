@@ -26,16 +26,24 @@ namespace PathfindingAlgorithms
         public List<Edge> Edges;
         public NodeType Type;
         public NodeState State;
+        public Shape Shape;
 
-        protected Node(int id, double[] pos)
+        public Node(int id, double[] pos, Shape shape)
         {
             ID = id;
             Pos = pos;
             Edges = new List<Edge>();
             Type = NodeType.Empty;
             State = NodeState.Unseen;
+
+            // default shape
+            Shape = shape;
+            Shape.Tag = id;
+            Shape.Fill = NodeBrushes.Empty;
+            Shape.Stroke = Brushes.Gray;
+            Shape.StrokeThickness = 0.5;
         }
-        public virtual void MarkAs(Brush b) { }
+        public void MarkAs(Brush b) { Shape.Fill = b; }
         public void SetDefaultState() { SetState(NodeState.Unseen); }
         public void SetDefaultType() { SetType(NodeType.Empty); }
 
@@ -59,32 +67,5 @@ namespace PathfindingAlgorithms
         {
             Edges.Add(new Edge(node, weight));
         }
-    }
-    class GridNode : Node
-    {
-        public Rectangle Rect;
-        public GridNode(int id, double[] pos, Rectangle rect) : base(id, pos)
-        { 
-            Rect = rect;
-            Rect.Fill = NodeBrushes.Empty;
-            Rect.Stroke = Brushes.Gray;
-            Rect.StrokeThickness = 0.5;
-        }
-        public override void MarkAs(Brush b) { Rect.Fill = b; }
-    }
-
-    class HexNode : Node
-    {
-        public Polygon Pol;
-        public HexNode(int id, double[] pos, Polygon pol) : base(id, pos)
-        {
-            Pol = pol;
-            Pol.Tag = id;
-            Pol.Fill = NodeBrushes.Empty;
-            Pol.Stroke = Brushes.Gray;
-            Pol.StrokeThickness = 0.5;
-        }
-        public override void MarkAs(Brush b) { Pol.Fill = b; }
-
     }
 }

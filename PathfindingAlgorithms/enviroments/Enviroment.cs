@@ -30,7 +30,6 @@ namespace PathfindingAlgorithms
             Canv = canv;
         }
         public abstract int CoordsToIndex(int x, int y);
-        public abstract int ScreenCoordsToIndex(double x, double y);
         public abstract void Initialize();
         protected abstract void OnMouseDown(object sender, MouseButtonEventArgs e);
         protected void SetType(Node node, NodeType type)

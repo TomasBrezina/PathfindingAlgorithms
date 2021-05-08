@@ -50,14 +50,14 @@ namespace PathfindingAlgorithms
                     // hex corners
                     PointCollection points = new PointCollection();
                     for (int c = 0; c < 6; c++)  { points.Add(GetHexCorner(centerX, centerY,  c)); }
-                    HexNode node = new HexNode(
+                    Node node = new Node(
                         index,
                         new double[2] { centerX, centerY },
                         new Polygon { Points = points }
                     );
                     Nodes.Add(node);
-                    node.Pol.MouseDown += OnMouseDown; // add event handler
-                    Canv.Children.Add(node.Pol); // add rect to canvas
+                    node.Shape.MouseDown += OnMouseDown; // add event handler
+                    Canv.Children.Add(node.Shape); // add rect to canvas
                     index += 1;
                 }
             }
@@ -94,10 +94,6 @@ namespace PathfindingAlgorithms
         public override int CoordsToIndex(int x, int y)
         {
             return x + (y * Shape[0]);
-        }
-        public override int ScreenCoordsToIndex(double x, double y)
-        {
-            return -1;
         }
 
         protected override void OnMouseDown(object sender, MouseButtonEventArgs e)
