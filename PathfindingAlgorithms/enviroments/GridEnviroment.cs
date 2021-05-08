@@ -11,19 +11,18 @@ namespace PathfindingAlgorithms
 {
     public class GridEnviroment : Enviroment
     {
-        private double RectHeight;
-        private double RectWidth;
+        private double RectSize;
+
 
         public GridEnviroment(Canvas canv, int[] shape) : base(canv, shape)
-        {   
+        {
+            // size to fill at least one dimension
+            RectSize = Math.Min(Canv.ActualHeight / Shape[1], Canv.ActualWidth / Shape[0]);
             Initialize();
         }
 
         public override void Initialize()
         {
-            RectHeight = Canv.ActualHeight / Shape[1];
-            RectWidth = Canv.ActualWidth / Shape[0];
-
             int index = 0;
             for (int j = 0; j < Shape[1]; j++)
             {
@@ -32,20 +31,20 @@ namespace PathfindingAlgorithms
                     GridNode node = new GridNode(
                         index,
                         new double[2] {
-                            (i * RectWidth) + (RectWidth / 2),
-                            (j * RectHeight) + (RectHeight / 2)
+                            (i * RectSize) + (RectSize / 2),
+                            (j * RectSize) + (RectSize / 2)
                         },
                         new Rectangle
                         {
-                            Height = RectHeight,
-                            Width = RectWidth,
+                            Height = RectSize,
+                            Width = RectSize,
                         }
                     );
                     Nodes.Add(node);
                     node.Rect.MouseDown += OnMouseDown; // add event handler
                     Canv.Children.Add(node.Rect); // add rect to canvas
-                    Canvas.SetLeft(node.Rect, (i * RectWidth));
-                    Canvas.SetTop(node.Rect, (j * RectHeight));
+                    Canvas.SetLeft(node.Rect, (i * RectSize));
+                    Canvas.SetTop(node.Rect, (j * RectSize));
                     index += 1;
                 }
             }
@@ -82,8 +81,8 @@ namespace PathfindingAlgorithms
         // convert on-screen coordinates to index of node
         public override int ScreenCoordsToIndex(double x, double y)
         {
-            int xi = (int)Math.Round(x / RectWidth);
-            int yi = (int)Math.Round(y / RectHeight);
+            int xi = (int)Math.Round(x / RectSize);
+            int yi = (int)Math.Round(y / RectSize);
             return CoordsToIndex(xi, yi);
         }
         protected override void OnMouseDown(object sender, MouseButtonEventArgs e)

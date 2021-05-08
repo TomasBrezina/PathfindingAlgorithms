@@ -63,6 +63,7 @@
     <Compile Include="algorithms\Dijkstra.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="enviroments\GridEnviroment.cs" />
+    <Compile Include="enviroments\HexagonEnviroment.cs" />
     <Compile Include="Path.cs" />
     <Compile Include="Tools.cs" />
     <Compile Include="MainViewModel.cs" />

@@ -72,4 +72,19 @@ namespace PathfindingAlgorithms
         }
         public override void MarkAs(Brush b) { Rect.Fill = b; }
     }
+
+    class HexNode : Node
+    {
+        public Polygon Pol;
+        public HexNode(int id, double[] pos, Polygon pol) : base(id, pos)
+        {
+            Pol = pol;
+            Pol.Tag = id;
+            Pol.Fill = NodeBrushes.Empty;
+            Pol.Stroke = Brushes.Gray;
+            Pol.StrokeThickness = 0.5;
+        }
+        public override void MarkAs(Brush b) { Pol.Fill = b; }
+
+    }
 }

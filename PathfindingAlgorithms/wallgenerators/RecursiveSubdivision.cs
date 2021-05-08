@@ -9,7 +9,6 @@ namespace PathfindingAlgorithms
     // Not actually recursive 
     class RecursiveSubdivision : WallGenerator
     {
-        private Random Random;
         private class RecursiveSubdivisionParameter
         {
             public bool IsHorizontal;
@@ -27,21 +26,18 @@ namespace PathfindingAlgorithms
             }
         }
 
-        // Queue with parameters to replace recursion
+        private Random Random;
+        // Stack with parameters to replace recursion
         private Stack<RecursiveSubdivisionParameter> Layers;
         private Queue<Node> NodesToChange;
-        private int MinGap = 1;
-        private int Columns, Rows;
+        private int MinGap = 2;
         public RecursiveSubdivision(Enviroment env) : base(env)
         {
             Random = new Random();
             Layers = new Stack<RecursiveSubdivisionParameter>();
             NodesToChange = new Queue<Node>();
 
-            Columns = env.Shape[0];
-            Rows = env.Shape[1];
-
-            Layers.Push(new RecursiveSubdivisionParameter(true, 0, Columns, 0, Rows));
+            Layers.Push(new RecursiveSubdivisionParameter(true, 0, env.Shape[0], 0, env.Shape[1]));
             Run();
         }
         private bool IsEnoughSpace(RecursiveSubdivisionParameter Par)
@@ -66,7 +62,9 @@ namespace PathfindingAlgorithms
                 if (Par.ColumnDiff < Par.RowDiff)
                 {
                     int rowSeparator = (int)(Par.RowStart + Par.RowEnd) / 2;
-                    int entrance = Random.Next(Par.ColumnStart, Par.ColumnEnd);
+                    int entrance = Random.Next(Par.ColumnStart, Par.ColumnEnd - 1);
+                    if (entrance == (int)(Par.ColumnStart + Par.ColumnEnd)/2) { entrance++; } //shift entrance so its not in middle
+                    
                     for (int col = Par.ColumnStart; col < Par.ColumnEnd; col++)
                     {
                         if (col == entrance) continue;
@@ -81,6 +79,8 @@ namespace PathfindingAlgorithms
                 {
                     int colSeparator = (int)(Par.ColumnStart + Par.ColumnEnd) / 2;
                     int entrance = Random.Next(Par.RowStart, Par.RowEnd);
+                    if (entrance == (int)(Par.ColumnStart + Par.ColumnEnd) / 2) { entrance++; } //shift entrance so its not in middle
+
                     for (int row = Par.RowStart; row < Par.RowEnd; row++)
                     {
                         if (row == entrance) continue;

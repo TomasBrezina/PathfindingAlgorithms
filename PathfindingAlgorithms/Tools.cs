@@ -20,5 +20,18 @@ namespace PathfindingAlgorithms
                     return null;
             }
         }
+
+        public static WallGenerator WallGeneratorFromString(string name, Enviroment env)
+        {
+            switch (name)
+            {
+                case "Noise generator":
+                    return new NoiseWallGenerator(env, 30);
+                case "Recursive subdivision":
+                    return new RecursiveSubdivision(env);
+                default:
+                    return null;
+            }
+        }
     }
 }

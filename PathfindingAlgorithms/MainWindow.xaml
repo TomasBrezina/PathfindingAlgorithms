@@ -80,12 +80,18 @@
             <ToolBar Height="30" Background="#eee">
                 <Button IsEnabled="{Binding Path=IsRunning, Converter={StaticResource InverseBooleanConverter}}" Margin="5,0" Content="Generate" Click="GenerateWall_Click" ToolTip="Generate Noise.">
                 </Button>
+                <ComboBox Margin="5,0" SelectedIndex="0" SelectedItem="{Binding SelectedWallGenerator}" ItemsSource="{Binding WallGeneratorsList}"/>
             </ToolBar>
         </ToolBarTray>
 
-        <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="GridCanvas" Grid.Row="1" Grid.Column="0">
-            
-        </Canvas>
+        <DockPanel Grid.Row="1" Grid.Column="0">
+            <Viewbox>
+                <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="GridCanvas" Grid.Row="1" Grid.Column="0" >
+                </Canvas>
+            </Viewbox>
+        </DockPanel>
+
+
 
         <!-- <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
             <Button Width="100">

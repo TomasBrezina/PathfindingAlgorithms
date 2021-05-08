@@ -30,8 +30,23 @@ namespace PathfindingAlgorithms
             {
                 return new List<string>()
                 {
-                    "BFS",
-                    "Dijkstra"
+                    "Dijkstra",
+                    "BFS"      
+                };
+            }
+        }
+
+        // Wall generators
+        public string SelectedWallGenerator { get; set; }
+
+        public List<string> WallGeneratorsList
+        {
+            get
+            {
+                return new List<string>()
+                {
+                    "Recursive subdivision",
+                    "Noise generator"
                 };
             }
         }
