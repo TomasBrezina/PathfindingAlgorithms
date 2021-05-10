@@ -1,0 +1,23 @@
+﻿<Window x:Class="PathfindingAlgorithms.NewEnviroment"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PathfindingAlgorithms"
+        mc:Ignorable="d"
+        Title="New Enviroment" Height="300" Width="300">
+    <Window.Background>
+        <ImageBrush ImageSource="{Binding SelectedEnviromentImagePath}" Stretch="UniformToFill"></ImageBrush>
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center"  VerticalAlignment="Center" Text="Create new enviromet:" FontSize="15" FontWeight="Bold"/>
+        <ComboBox Grid.Row="1" Margin ="20" SelectedIndex="0" SelectedItem="{Binding SelectedEnviroment}" ItemsSource="{Binding EnviromentList}"/>
+
+    </Grid>
+</Window>

@@ -29,6 +29,7 @@ namespace PathfindingAlgorithms
             Shape = shape;
             Canv = canv;
         }
+        public abstract (int, int) IndexToCoords(int i);
         public abstract int CoordsToIndex(int x, int y);
         public abstract void Initialize();
         protected abstract void OnMouseDown(object sender, MouseButtonEventArgs e);

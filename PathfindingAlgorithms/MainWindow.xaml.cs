@@ -69,9 +69,10 @@ namespace PathfindingAlgorithms
             State = RunningState.NotRunning;
         }
         public void StartupInitialization()
-        {       
-            
-            Env = new HexagonEnviroment(GridCanvas, new int[] { 16, 9 });
+        {
+
+            //Env = new HexagonEnviroment(GridCanvas, new int[] { 16, 9 });
+            Env = new GridEnviroment(GridCanvas, new int[] { 16, 9 });
             Env.StartNode = Env.Nodes.First();
             Env.EndNode = Env.Nodes.Last();
             Env.StartNode.SetType(NodeType.Start);
@@ -125,7 +126,6 @@ namespace PathfindingAlgorithms
 
             //Gen = new NoiseWallGenerator(Env, 30);
             Gen = Tools.WallGeneratorFromString(MVM.SelectedWallGenerator, Env);
-            Timer.Interval = TimeSpan.FromMilliseconds(20);
             StartTimer(RunningState.WallGenerator);
         }
     }

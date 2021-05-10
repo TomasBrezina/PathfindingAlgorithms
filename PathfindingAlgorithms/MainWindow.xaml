@@ -5,87 +5,108 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PathfindingAlgorithms"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="800" ResizeMode="CanResize" Background="#eee">
+        Title="MainWindow" Height="600" Width="1000" ResizeMode="CanResize" Background="#eee"
+        MinHeight="480" MinWidth="650">
 
     <Window.Resources>
         <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
     </Window.Resources>
     
-    <Grid Margin="15">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="6*"/>
         </Grid.RowDefinitions>
+        <DockPanel>
+            <Menu Padding="5" Background="#cccccc" DockPanel.Dock="Top">
+                <MenuItem Header="Enviroment">
+                    <MenuItem Header="_New" />
+                    <MenuItem Header="_Reset" />
+                    <MenuItem Header="_Exit" />
+                </MenuItem>
+                <MenuItem Header="About">
+                    <MenuItem Header="_New" />
+                    <MenuItem Header="_Reset" />
+                    <MenuItem Header="_Exit" />
+                </MenuItem>
+                <MenuItem Header="Help">
+                    <MenuItem Header="_New" />
+                    <MenuItem Header="_Reset" />
+                    <MenuItem Header="_Exit" />
+                </MenuItem>
+            </Menu>
 
-        <ToolBarTray ClipToBounds="True" Background="#eee" Grid.Row="0" >
-            <ToolBar ToolBarTray.IsLocked="True" Height="30" Background="#eee">
-                <Button ToolBar.OverflowMode="Never" IsEnabled="{Binding Path=IsRunning, Converter={StaticResource InverseBooleanConverter}}" Margin="5,0" Click="StartButton_Click" ToolTip="Start the algorithm.">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="images/start.png" />
-                        <TextBlock VerticalAlignment="Center" Margin="3,0,0,0">Start</TextBlock>
-                    </StackPanel>
-                </Button>
-                <Separator/>
-                <ComboBox Margin="5,0" SelectedIndex="0" SelectedItem="{Binding SelectedAlgorithm}" ItemsSource="{Binding AlgorithmsList}"/>
-                <Button Margin="5,0" ToolTip="Paste from Windows Clipboard.">
-                    <Image Source="images/book-question.png" />
-                </Button>
-            </ToolBar>
-            <ToolBar Height="30" Background="#eee">
-                <ToggleButton Name="PlayPauseButton" IsEnabled="{Binding Path=IsRunning, Mode=TwoWay}" Click="PlayPauseButton_Click" >
-                    <ToggleButton.Resources>
-                        <Image Source="images/play.png" x:Key="Play"/>
-                        <Image Source="images/pause.png" x:Key="Pause"/>
-                    </ToggleButton.Resources>
-                    <ToggleButton.Style>
-                        <Style TargetType="{x:Type ToggleButton}">
-                            <Style.Triggers>
-                                <Trigger Property="IsChecked" Value="true">
-                                    <Setter Property="Content" Value="{StaticResource Play}" />
-                                </Trigger>
-                                <Trigger Property="IsChecked" Value="false">
-                                    <Setter Property="Content" Value="{StaticResource Pause}" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ToggleButton.Style>
-                </ToggleButton>
-                <Separator/>
-                <Button IsEnabled="{Binding Path=IsRunning, Mode=TwoWay}" ToolBar.OverflowMode="Never" Margin="5,0" Click="StopButton_Click" ToolTip="Stop the algorithm.">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="images/stop.png" />
-                        <TextBlock VerticalAlignment="Center" Margin="3,0,0,0">Stop</TextBlock>
-                    </StackPanel>
-                </Button>
-            </ToolBar>
+            <ToolBarTray Margin="5" ClipToBounds="True" Background="#eee" Grid.Row="0" DockPanel.Dock="Bottom">
+                <ToolBar Margin="5,0" Height="30" Background="#eee">
+                    <Button ToolBar.OverflowMode="Never" IsEnabled="{Binding Path=IsRunning, Converter={StaticResource InverseBooleanConverter}}" Margin="5,0" Click="StartButton_Click" ToolTip="Start the algorithm.">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="images/start.png" />
+                            <TextBlock VerticalAlignment="Center" Margin="3,0,0,0">Start</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Separator/>
+                    <ComboBox Margin="5,0" SelectedIndex="0" SelectedItem="{Binding SelectedAlgorithm}" ItemsSource="{Binding AlgorithmsList}"/>
+                    <Button Margin="5,0" ToolTip="Paste from Windows Clipboard.">
+                        <Image Source="images/book-question.png" />
+                    </Button>
+                    <Separator/>
+                    <ToggleButton Name="PlayPauseButton" IsEnabled="{Binding Path=IsRunning, Mode=TwoWay}" Click="PlayPauseButton_Click" >
+                        <ToggleButton.Resources>
+                            <Image Source="images/play.png" x:Key="Play"/>
+                            <Image Source="images/pause.png" x:Key="Pause"/>
+                        </ToggleButton.Resources>
+                        <ToggleButton.Style>
+                            <Style TargetType="{x:Type ToggleButton}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsChecked" Value="true">
+                                        <Setter Property="Content" Value="{StaticResource Play}" />
+                                    </Trigger>
+                                    <Trigger Property="IsChecked" Value="false">
+                                        <Setter Property="Content" Value="{StaticResource Pause}" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ToggleButton.Style>
+                    </ToggleButton>
+                    <Button IsEnabled="{Binding Path=IsRunning, Mode=TwoWay}" ToolBar.OverflowMode="Never" Margin="5,0" Click="StopButton_Click" ToolTip="Stop the algorithm.">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="images/stop.png" />
+                            <TextBlock VerticalAlignment="Center" Margin="3,0,0,0">Stop</TextBlock>
+                        </StackPanel>
+                    </Button>
+                </ToolBar>
 
-            <ToolBar Height="30" Background="#eee">
-                <ToolBar.Resources>
-                    <local:ComparisonConverter x:Key="ComparisonConverter" />
-                </ToolBar.Resources>
-                <RadioButton IsChecked="{Binding Path=SelectedNodeType, Mode=TwoWay, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static local:NodeType.Start}}">
-                    <Image Source="images/flag-start.png" Margin="5,0" />
-                </RadioButton>
-                <RadioButton IsChecked="{Binding Path=SelectedNodeType, Mode=TwoWay, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static local:NodeType.End}}">
-                    <Image Source="images/flag-end.png" Margin="5,0" />
-                </RadioButton>
-                <RadioButton IsChecked="{Binding Path=SelectedNodeType, Mode=TwoWay, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static local:NodeType.Wall}}">
-                    <Image Source="images/wall.png"  Margin="5,0" />
-                </RadioButton>
-                <RadioButton IsChecked="{Binding Path=SelectedNodeType, Mode=TwoWay, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static local:NodeType.Empty}}">
-                    <Image Source="images/eraser.png" Margin="5,0" />
-                </RadioButton>
-            </ToolBar>
+                <ToolBar Margin="5,0" Height="30" Background="#eee">
+                    <ToolBar.Resources>
+                        <local:ComparisonConverter x:Key="ComparisonConverter" />
+                    </ToolBar.Resources>
+                    <RadioButton IsChecked="{Binding Path=SelectedNodeType, Mode=TwoWay, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static local:NodeType.Start}}">
+                        <Image Source="images/flag-start.png" Margin="5,0" />
+                    </RadioButton>
+                    <RadioButton IsChecked="{Binding Path=SelectedNodeType, Mode=TwoWay, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static local:NodeType.End}}">
+                        <Image Source="images/flag-end.png" Margin="5,0" />
+                    </RadioButton>
+                    <RadioButton IsChecked="{Binding Path=SelectedNodeType, Mode=TwoWay, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static local:NodeType.Wall}}">
+                        <Image Source="images/wall.png"  Margin="5,0" />
+                    </RadioButton>
+                    <RadioButton IsChecked="{Binding Path=SelectedNodeType, Mode=TwoWay, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static local:NodeType.Empty}}">
+                        <Image Source="images/eraser.png" Margin="5,0" />
+                    </RadioButton>
+                </ToolBar>
 
-            <ToolBar Height="30" Background="#eee">
-                <Button IsEnabled="{Binding Path=IsRunning, Converter={StaticResource InverseBooleanConverter}}" Margin="5,0" Content="Generate" Click="GenerateWall_Click" ToolTip="Generate Noise.">
-                </Button>
-                <ComboBox Margin="5,0" SelectedIndex="0" SelectedItem="{Binding SelectedWallGenerator}" ItemsSource="{Binding WallGeneratorsList}"/>
-            </ToolBar>
-        </ToolBarTray>
-
-        <DockPanel Grid.Row="1" Grid.Column="0">
-            <Viewbox>
+                <ToolBar Margin="5,0" Height="30" Background="#eee">
+                    <ComboBox Margin="5,0" SelectedIndex="0" SelectedItem="{Binding SelectedWallGenerator}" ItemsSource="{Binding WallGeneratorsList}"/>
+                    <Button IsEnabled="{Binding Path=IsRunning, Converter={StaticResource InverseBooleanConverter}}" Margin="5,0" Click="GenerateWall_Click" ToolTip="Generate Noise.">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="images/wall-plus.png" />
+                            <TextBlock VerticalAlignment="Center" Margin="3,0,0,0">Generate</TextBlock>
+                        </StackPanel>
+                    </Button>
+                </ToolBar>
+            </ToolBarTray>
+        </DockPanel>
+        <DockPanel Margin="15" Grid.Row="1" Grid.Column="0">
+            <Viewbox DockPanel.Dock="Top" >
                 <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="GridCanvas" Grid.Row="1" Grid.Column="0" >
                 </Canvas>
             </Viewbox>

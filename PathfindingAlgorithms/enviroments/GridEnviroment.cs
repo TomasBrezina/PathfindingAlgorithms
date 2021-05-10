@@ -13,7 +13,6 @@ namespace PathfindingAlgorithms
     {
         private double RectSize;
 
-
         public GridEnviroment(Canvas canv, int[] shape) : base(canv, shape)
         {
             // size to fill at least one dimension
@@ -78,7 +77,13 @@ namespace PathfindingAlgorithms
         {
             return x + (y * Shape[0]);
         }
-        // convert on-screen coordinates to index of node
+        // convert list index to 2d coordinates of a node
+        public override (int, int) IndexToCoords(int i)
+        {
+            int x = i % Shape[0];
+            int y = i / Shape[0];
+            return (x, y);
+        }
 
         protected override void OnMouseDown(object sender, MouseButtonEventArgs e)
         {

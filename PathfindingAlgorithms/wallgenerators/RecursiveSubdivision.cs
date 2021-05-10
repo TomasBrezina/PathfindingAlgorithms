@@ -30,7 +30,7 @@ namespace PathfindingAlgorithms
         // Stack with parameters to replace recursion
         private Stack<RecursiveSubdivisionParameter> Layers;
         private Queue<Node> NodesToChange;
-        private int MinGap = 2;
+        private int MinGap = 1;
         public RecursiveSubdivision(Enviroment env) : base(env)
         {
             Random = new Random();
@@ -78,7 +78,7 @@ namespace PathfindingAlgorithms
                 else
                 {
                     int colSeparator = (int)(Par.ColumnStart + Par.ColumnEnd) / 2;
-                    int entrance = Random.Next(Par.RowStart, Par.RowEnd);
+                    int entrance = Random.Next(Par.RowStart, Par.RowEnd - 1);
                     if (entrance == (int)(Par.ColumnStart + Par.ColumnEnd) / 2) { entrance++; } //shift entrance so its not in middle
 
                     for (int row = Par.RowStart; row < Par.RowEnd; row++)

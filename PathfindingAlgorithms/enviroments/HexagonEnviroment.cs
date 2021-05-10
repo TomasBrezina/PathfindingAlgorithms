@@ -95,6 +95,12 @@ namespace PathfindingAlgorithms
         {
             return x + (y * Shape[0]);
         }
+        public override (int, int) IndexToCoords(int i)
+        {
+            int x = i % Shape[0];
+            int y = i / Shape[0];
+            return (x, y);
+        }
 
         protected override void OnMouseDown(object sender, MouseButtonEventArgs e)
         {

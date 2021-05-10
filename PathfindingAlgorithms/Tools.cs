@@ -29,6 +29,10 @@ namespace PathfindingAlgorithms
                     return new NoiseWallGenerator(env, 30);
                 case "Recursive subdivision":
                     return new RecursiveSubdivision(env);
+                case "Clear walls":
+                    return new ClearWalls(env);
+                case "Prim algorithm":
+                    return new PrimWallGenerator(env);
                 default:
                     return null;
             }
