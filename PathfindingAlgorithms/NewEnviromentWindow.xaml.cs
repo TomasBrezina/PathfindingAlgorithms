@@ -15,17 +15,58 @@ using System.Windows.Shapes;
 namespace PathfindingAlgorithms
 {
     /// <summary>
-    /// Interakční logika pro NewEnviroment.xaml
+    /// Interakční logika pro NewEnviromentWindow.xaml
     /// </summary>
-    public partial class NewEnviroment : Window
+    public partial class NewEnviromentWindow : Window
     {
         NewEnviromentViewModel VM;
-        public NewEnviroment()
+
+        public EnviromentConstructor ReturnEnviroment;
+
+        public NewEnviromentWindow()
         {
             InitializeComponent();
 
             VM = new NewEnviromentViewModel();
             DataContext = VM;
+
+            VM.RowNum = 9;
+            VM.ColNum = 16;
+
+            VM.LowerValue = 1;
+            VM.HigherValue = 3;
+        }
+
+
+        private void HexGenerateButton_Click(object sender, RoutedEventArgs e)
+        {
+            ReturnEnviroment = new EnviromentConstructor()
+            {
+                EnvType = typeof(HexagonGridEnviroment),
+                Shape = (VM.ColNum, VM.RowNum)
+            };
+            DialogResult = true;
+            this.Close();
+        }
+        private void PointGenerateButton_Click(object sender, RoutedEventArgs e)
+        {
+            ReturnEnviroment = new EnviromentConstructor()
+            {
+                EnvType = typeof(HexagonGridEnviroment),
+                Shape = (VM.ColNum, VM.RowNum)
+            };
+            DialogResult = true;
+            this.Close();
+        }
+        private void SquareGenerateButton_Click(object sender, RoutedEventArgs e)
+        {
+            ReturnEnviroment = new EnviromentConstructor()
+            {
+                EnvType = typeof(SquareGridEnviroment),
+                Shape = (VM.ColNum, VM.RowNum)
+            };
+            DialogResult = true;
+            this.Close();
         }
     }
 }

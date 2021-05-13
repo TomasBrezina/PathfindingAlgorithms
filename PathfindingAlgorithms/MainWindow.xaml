@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PathfindingAlgorithms"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1000" ResizeMode="CanResize" Background="#eee"
+        Icon="images/flag-start.png"
+        Title="PathfindingAlgorithms by Tomas Brezina" Height="600" Width="1000" ResizeMode="CanResize" Background="#eee"
         MinHeight="480" MinWidth="650">
 
     <Window.Resources>
@@ -20,20 +21,12 @@
         <DockPanel>
             <Menu Padding="5" Background="#cccccc" DockPanel.Dock="Top">
                 <MenuItem Header="Enviroment">
-                    <MenuItem Header="_New" />
-                    <MenuItem Header="_Reset" />
+                    <MenuItem Header="_New" Click="EnviromentNewButton_Click"/>
+                    <MenuItem Header="_Reset" Click="EnviromentResetButton_Click" />
                     <MenuItem Header="_Exit" />
                 </MenuItem>
-                <MenuItem Header="About">
-                    <MenuItem Header="_New" />
-                    <MenuItem Header="_Reset" />
-                    <MenuItem Header="_Exit" />
-                </MenuItem>
-                <MenuItem Header="Help">
-                    <MenuItem Header="_New" />
-                    <MenuItem Header="_Reset" />
-                    <MenuItem Header="_Exit" />
-                </MenuItem>
+                <MenuItem Header="About"/>
+                <MenuItem Header="Help"/>
             </Menu>
 
             <ToolBarTray Margin="5" ClipToBounds="True" Background="#eee" Grid.Row="0" DockPanel.Dock="Bottom">

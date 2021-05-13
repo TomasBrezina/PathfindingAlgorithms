@@ -17,20 +17,18 @@ namespace PathfindingAlgorithms
         public Node EndNode;
 
         public List<Node> Nodes;
-        public int[] Shape;
 
         protected List<Path> Paths;
         protected Canvas Canv;
 
-        public Enviroment(Canvas canv, int[] shape)
+        protected const double DefaultCanvWidth = 1000;
+
+        public Enviroment(Canvas canv)
         {
             Paths = new List<Path>();
             Nodes = new List<Node>();
-            Shape = shape;
             Canv = canv;
         }
-        public abstract (int, int) IndexToCoords(int i);
-        public abstract int CoordsToIndex(int x, int y);
         public abstract void Initialize();
         protected abstract void OnMouseDown(object sender, MouseButtonEventArgs e);
         protected void SetType(Node node, NodeType type)
@@ -80,6 +78,10 @@ namespace PathfindingAlgorithms
                 Canv.Children.Remove(path.Polyline);
             }
             Paths.Clear();
+        }
+        public void Clear()
+        {
+            Canv.Children.Clear();
         }
     }
 }

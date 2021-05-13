@@ -27,17 +27,19 @@ namespace PathfindingAlgorithms
         }
 
         private Random Random;
+        private new GridEnviroment Env;
         // Stack with parameters to replace recursion
         private Stack<RecursiveSubdivisionParameter> Layers;
         private Queue<Node> NodesToChange;
         private int MinGap = 1;
-        public RecursiveSubdivision(Enviroment env) : base(env)
+        public RecursiveSubdivision(GridEnviroment env) : base(env)
         {
+            Env = env;
             Random = new Random();
             Layers = new Stack<RecursiveSubdivisionParameter>();
             NodesToChange = new Queue<Node>();
 
-            Layers.Push(new RecursiveSubdivisionParameter(true, 0, env.Shape[0], 0, env.Shape[1]));
+            Layers.Push(new RecursiveSubdivisionParameter(true, 0, env.Shape.Item1, 0, env.Shape.Item2));
             Run();
         }
         private bool IsEnoughSpace(RecursiveSubdivisionParameter Par)

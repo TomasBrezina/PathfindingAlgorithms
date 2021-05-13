@@ -28,7 +28,12 @@ namespace PathfindingAlgorithms
                 case "Noise generator":
                     return new NoiseWallGenerator(env, 30);
                 case "Recursive subdivision":
-                    return new RecursiveSubdivision(env);
+                    // if env is inherited
+                    if (env.GetType().IsSubclassOf(typeof(GridEnviroment)))
+                    {
+                        return new RecursiveSubdivision((GridEnviroment) env);
+                    }
+                    else return null;
                 case "Clear walls":
                     return new ClearWalls(env);
                 case "Prim algorithm":

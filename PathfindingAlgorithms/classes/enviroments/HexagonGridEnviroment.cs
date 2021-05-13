@@ -11,21 +11,23 @@ using System.Windows.Shapes;
 
 namespace PathfindingAlgorithms
 {
-    class HexagonEnviroment : Enviroment
+    class HexagonGridEnviroment : GridEnviroment
     {
         private double HexRadius; 
         private double HexWidth; // 2 * HexRadius
         private double HexHeight; // Sqrt(3) * HexRadius
-        public HexagonEnviroment(Canvas canv, int[] shape) : base(canv, shape)
+
+        public HexagonGridEnviroment(Canvas canv, (int, int) shape) : base(canv, shape)
         {
             // radius to fully fill width or height of canvas with hexagons
-            HexRadius = Math.Min(
-                (canv.ActualWidth / shape[0]) / Math.Sqrt(3), // radius to fit width
-                (canv.ActualHeight / shape[1]) / 1.5 // radius to fit height
-            );
-            HexWidth = HexRadius * Math.Sqrt(3);
+
+            HexWidth = DefaultCanvWidth / shape.Item1;
+            HexRadius = HexWidth / Math.Sqrt(3);
             HexHeight = HexRadius * 2;
 
+            // Set canvas width and height to best fit the env shape
+            canv.Width = HexWidth * shape.Item1 + (HexWidth/2);
+            canv.Height = HexHeight * 0.75 * shape.Item2 + (HexHeight*0.25);
             Initialize();
         }
         private Point GetHexCorner(double cx, double cy, int i)
@@ -40,9 +42,9 @@ namespace PathfindingAlgorithms
         {
             int index = 0;
             double leftOffset;
-            for (int j = 0; j < Shape[1]; j++)
+            for (int j = 0; j < Shape.Item2; j++)
             {
-                for (int i = 0; i < Shape[0]; i++)
+                for (int i = 0; i < Shape.Item1; i++)
                 {
                     leftOffset = (j % 2 != 0) ? (HexWidth / 2) : 0; // if odd row than offset 3/4 * w
                     double centerX = leftOffset + i * HexWidth + (HexWidth * 0.5) ;
@@ -70,9 +72,9 @@ namespace PathfindingAlgorithms
                 new (int, int)[6] { (-1, 0), (0, -1), (1, -1), (1, 0), (1, 1), (0, 1) },
             };
             float weight = 1;
-            for (int i = 0; i < Shape[0]; i++)
+            for (int i = 0; i < Shape.Item1; i++)
             {
-                for (int j = 0; j < Shape[1]; j++)
+                for (int j = 0; j < Shape.Item2; j++)
                 {
                     // is row even ? 0 : 1
                     int shiftParity = (j % 2 == 0) ? 0 : 1;
@@ -80,7 +82,7 @@ namespace PathfindingAlgorithms
                     {
                         int x = i + shifts[shiftParity][shiftIndex].Item1; 
                         int y = j + shifts[shiftParity][shiftIndex].Item2;
-                        if (x >= 0 && x < Shape[0] && y >= 0 && y < Shape[1])
+                        if (x >= 0 && x < Shape.Item1 && y >= 0 && y < Shape.Item2)
                         {
                             Node thisNode = Nodes[CoordsToIndex(i, j)];
                             Node neighbourNode = Nodes[CoordsToIndex(x, y)];
@@ -93,12 +95,12 @@ namespace PathfindingAlgorithms
         }
         public override int CoordsToIndex(int x, int y)
         {
-            return x + (y * Shape[0]);
+            return x + (y * Shape.Item1);
         }
         public override (int, int) IndexToCoords(int i)
         {
-            int x = i % Shape[0];
-            int y = i / Shape[0];
+            int x = i % Shape.Item1;
+            int y = i / Shape.Item1;
             return (x, y);
         }
 

@@ -1,23 +1,119 @@
-﻿<Window x:Class="PathfindingAlgorithms.NewEnviroment"
+﻿<Window x:Class="PathfindingAlgorithms.NewEnviromentWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:PathfindingAlgorithms"
-        mc:Ignorable="d"
-        Title="New Enviroment" Height="300" Width="300">
-    <Window.Background>
+        mc:Ignorable="d" 
+        Title="New Enviroment" Height="300" Width="400" WindowStartupLocation="CenterOwner">
+    <!--<Window.Background>
         <ImageBrush ImageSource="{Binding SelectedEnviromentImagePath}" Stretch="UniformToFill"></ImageBrush>
-    </Window.Background>
+    </Window.Background>-->  
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" HorizontalAlignment="Center"  VerticalAlignment="Center" Text="Create new enviromet:" FontSize="15" FontWeight="Bold"/>
-        <ComboBox Grid.Row="1" Margin ="20" SelectedIndex="0" SelectedItem="{Binding SelectedEnviroment}" ItemsSource="{Binding EnviromentList}"/>
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center"  VerticalAlignment="Center" Text="Create new enviroment:" FontSize="15" FontWeight="Bold"/>
+        <TabControl Margin="15" Grid.Row="1">
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="images/env-icon-sqr.png" Margin="5,0" Height="10"/>
+                        <TextBlock Text="Square grid"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <DockPanel Grid.Row="0" HorizontalAlignment="Center">
+                        <StackPanel Margin="10,0" DockPanel.Dock="Left" Orientation="Horizontal" HorizontalAlignment="Center"  VerticalAlignment="Center">
+                            <TextBlock Text="Rows:" Margin="5,2"/>
+                            <xctk:IntegerUpDown Value="{Binding RowNum}" Minimum="1" Maximum="200"/>
+                        </StackPanel>
+                        <StackPanel Margin="10,0" DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Center"  VerticalAlignment="Center">
+                            <TextBlock Text="Columns:" Margin="5,2"/>
+                            <xctk:IntegerUpDown Value="{Binding ColNum}" Minimum="1" Maximum="200"/>
+                        </StackPanel>
+                    </DockPanel>
+                    <StackPanel Grid.Row="1"  Margin="10,0"  Orientation="Horizontal" HorizontalAlignment="Center"  VerticalAlignment="Center">
+                        <TextBlock Text="Connect diagonal:" Margin="3,2"/>
+                        <CheckBox IsChecked="True" Margin="3,2" />
+                    </StackPanel>
+                    <Button Grid.Row="2" Height="30" Width="100" Content="Generate" Click="SquareGenerateButton_Click" />
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="images/env-icon-hex.png" Margin="5,0" Height="12"/>
+                        <TextBlock Text="Hex grid"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <DockPanel Grid.Row="0" HorizontalAlignment="Center">
+                        <StackPanel Margin="10,0" DockPanel.Dock="Left" Orientation="Horizontal" HorizontalAlignment="Center"  VerticalAlignment="Center">
+                            <TextBlock Text="Rows:" Margin="5,2"/>
+                            <xctk:IntegerUpDown Value="{Binding RowNum}" Minimum="1" Maximum="200"/>
+                        </StackPanel>
+                        <StackPanel Margin="10,0" DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Center"  VerticalAlignment="Center">
+                            <TextBlock Text="Columns:" Margin="5,2"/>
+                            <xctk:IntegerUpDown Value="{Binding ColNum}" Minimum="1" Maximum="200"/>
+                        </StackPanel>
+                    </DockPanel>
+                    <Button Grid.Row="2" Height="30" Width="100" Content="Generate" Click="HexGenerateButton_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="images/env-icon-cir.png" Margin="5,0" Height="8" />
+                        <TextBlock Text="Point graph"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <DockPanel Grid.Row="0" HorizontalAlignment="Center">
+                        <StackPanel Margin="10,0" DockPanel.Dock="Left" Orientation="Horizontal" HorizontalAlignment="Center"  VerticalAlignment="Center">
+                            <TextBlock Text="Number of nodes:" Margin="5,2"/>
+                            <xctk:IntegerUpDown Value="9" Minimum="1" Maximum="200"/>
+                        </StackPanel>
+                    </DockPanel>
+                    <StackPanel Grid.Row="1"  Margin="10,0" Orientation="Horizontal" HorizontalAlignment="Center"  VerticalAlignment="Center">
+                        <TextBlock Text="Number of edges:" Margin="5,2"/>
+                        <TextBlock Text="{Binding LowerValue}" Margin="5,2"/>
+                        <xctk:RangeSlider Name="neigboursRangeSlide" Margin="10,0" IsSnapToTickEnabled="True" Width="100" LowerValue="{Binding LowerValue}" HigherValue="{Binding HigherValue}" Minimum="1" Maximum="8"/>
+                        <TextBlock Text="{Binding HigherValue}" Margin="5,2"/>
+                    </StackPanel>
+                    <Button Grid.Row="2" Height="30" Width="100" Content="Generate" Click="PointGenerateButton_Click"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
 
+        <!--<TextBlock Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center"  VerticalAlignment="Center" Text="Create new enviroment:" FontSize="15" FontWeight="Bold"/>
+        <ComboBox Grid.Row="1" Margin ="20" SelectedIndex="0" SelectedItem="{Binding SelectedEnviroment}" ItemsSource="{Binding EnviromentList}"/>
+        <DockPanel Grid.Row="2" HorizontalAlignment="Center">
+            <StackPanel Margin="10,0" DockPanel.Dock="Left" Orientation="Horizontal" HorizontalAlignment="Center"  VerticalAlignment="Center">
+                <TextBlock Text="Rows:" Margin="5,2"/>
+                <xctk:IntegerUpDown Value="9" Minimum="1" Maximum="200"/>
+            </StackPanel>
+            <StackPanel Margin="10,0" DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Center"  VerticalAlignment="Center">
+                <TextBlock Text="Rows:" Margin="5,2"/>
+                <xctk:IntegerUpDown Value="9" Minimum="1" Maximum="200"/>
+            </StackPanel>
+        </DockPanel>-->
     </Grid>
 </Window>

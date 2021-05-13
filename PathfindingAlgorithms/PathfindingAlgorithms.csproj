@@ -52,30 +52,48 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.0.2\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.0.2\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.0.2\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.0.2\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.0.2\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="algorithms\Algorithm.cs" />
-    <Compile Include="algorithms\BFS.cs" />
-    <Compile Include="algorithms\Dijkstra.cs" />
-    <Compile Include="Enums.cs" />
+    <Compile Include="classes\algorithms\Algorithm.cs" />
+    <Compile Include="classes\algorithms\BFS.cs" />
+    <Compile Include="classes\algorithms\Dijkstra.cs" />
+    <Compile Include="classes\Enums.cs" />
+    <Compile Include="classes\enviroments\EnviromentConstructor.cs" />
+    <Compile Include="classes\enviroments\GridEnviroment.cs" />
+    <Compile Include="classes\Main.cs" />
     <Compile Include="NewEnviromentViewModel.cs" />
     <Compile Include="NewEnviromentWindow.xaml.cs">
       <DependentUpon>NewEnviromentWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="wallgenerators\ClearWalls.cs" />
-    <Compile Include="enviroments\GridEnviroment.cs" />
-    <Compile Include="enviroments\HexagonEnviroment.cs" />
-    <Compile Include="Path.cs" />
-    <Compile Include="Tools.cs" />
+    <Compile Include="classes\wallgenerators\ClearWalls.cs" />
+    <Compile Include="classes\enviroments\SquareGridEnviroment.cs" />
+    <Compile Include="classes\enviroments\HexagonGridEnviroment.cs" />
+    <Compile Include="classes\Path.cs" />
+    <Compile Include="classes\Tools.cs" />
     <Compile Include="MainViewModel.cs" />
-    <Compile Include="wallgenerators\NoiseWallGenerator.cs" />
-    <Compile Include="wallgenerators\PrimWallGenerator.cs" />
-    <Compile Include="wallgenerators\RecursiveSubdivision.cs" />
-    <Compile Include="wallgenerators\WallGenerator.cs" />
+    <Compile Include="classes\wallgenerators\NoiseWallGenerator.cs" />
+    <Compile Include="classes\wallgenerators\PrimWallGenerator.cs" />
+    <Compile Include="classes\wallgenerators\RecursiveSubdivision.cs" />
+    <Compile Include="classes\wallgenerators\WallGenerator.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -84,7 +102,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="enviroments\Enviroment.cs" />
+    <Compile Include="classes\enviroments\Enviroment.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -95,7 +113,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Node.cs" />
+    <Compile Include="classes\Node.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -150,6 +168,7 @@
     <Resource Include="images\start.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="new enviroment windows\" />
     <Folder Include="nodes\" />
   </ItemGroup>
   <ItemGroup>
@@ -159,10 +178,15 @@
     <Resource Include="images\wall-plus.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\background-hexagon-grid.png" />
+    <Resource Include="images\bg-hex.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\background-square-grid.png" />
+    <Resource Include="images\bg-sqr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\env-icon-cir.png" />
+    <Resource Include="images\env-icon-hex.png" />
+    <Resource Include="images\env-icon-sqr.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

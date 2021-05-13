@@ -9,23 +9,25 @@ using System.Windows.Shapes;
 
 namespace PathfindingAlgorithms
 {
-    public class GridEnviroment : Enviroment
+    public class SquareGridEnviroment : GridEnviroment
     {
         private double RectSize;
-
-        public GridEnviroment(Canvas canv, int[] shape) : base(canv, shape)
+        public SquareGridEnviroment(Canvas canv, (int,int) shape) : base(canv, shape)
         {
-            // size to fill at least one dimension
-            RectSize = Math.Min(Canv.ActualHeight / Shape[1], Canv.ActualWidth / Shape[0]);
+            RectSize = (DefaultCanvWidth / shape.Item1);
+            canv.Width = RectSize * shape.Item1;
+            canv.Height = RectSize * shape.Item2;
+            // unnecessary: size to fill at least one dimension
+            //RectSize = Math.Min(Canv.ActualHeight / Shape.Item2, Canv.ActualWidth / Shape.Item1);
             Initialize();
         }
 
         public override void Initialize()
         {
             int index = 0;
-            for (int j = 0; j < Shape[1]; j++)
+            for (int j = 0; j < Shape.Item2; j++)
             {
-                for (int i = 0; i < Shape[0]; i++)
+                for (int i = 0; i < Shape.Item1; i++)
                 {
                     Node node = new Node(
                         index,
@@ -51,16 +53,16 @@ namespace PathfindingAlgorithms
         }
         private void ConnectNodes()
         {
-            for (int i = 0; i < Shape[0]; i++)
+            for (int i = 0; i < Shape.Item1; i++)
             {
-                for (int j = 0; j < Shape[1]; j++)
+                for (int j = 0; j < Shape.Item2; j++)
                 {
                     int[][] shifts = new int[4][] { new int[] { -1, 0 }, new int[] { -1, -1 }, new int[] { 0, -1 }, new int[] { 1, -1 } };
                     float[] weights = new float[] { 1, 1.4f, 1, 1.4f };
                     for (int shiftIndex = 0; shiftIndex < shifts.Length; shiftIndex++)
                     {
                         int x = i + shifts[shiftIndex][0]; int y = j + shifts[shiftIndex][1];
-                        if (x >= 0 && x < Shape[0] && y >= 0 && y < Shape[1])
+                        if (x >= 0 && x < Shape.Item1 && y >= 0 && y < Shape.Item2)
                         {
                             float weight = weights[shiftIndex];
                             Node thisNode = Nodes[CoordsToIndex(i, j)];
@@ -75,13 +77,13 @@ namespace PathfindingAlgorithms
         // convert 2d coordinates to list index of a node
         public override int CoordsToIndex(int x, int y)
         {
-            return x + (y * Shape[0]);
+            return x + (y * Shape.Item1);
         }
         // convert list index to 2d coordinates of a node
         public override (int, int) IndexToCoords(int i)
         {
-            int x = i % Shape[0];
-            int y = i / Shape[0];
+            int x = i % Shape.Item1;
+            int y = i / Shape.Item1;
             return (x, y);
         }
 

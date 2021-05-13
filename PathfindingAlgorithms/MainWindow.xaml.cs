@@ -34,8 +34,9 @@ namespace PathfindingAlgorithms
             InitializeComponent();
 
             // Canvas
-            GridCanvas.Width = 1280;
-            GridCanvas.Height = 720;
+            GridCanvas.Background = Brushes.Red;
+            GridCanvas.Width = 680;
+            GridCanvas.Height = 480;
 
             
             // Viev model            
@@ -71,8 +72,8 @@ namespace PathfindingAlgorithms
         public void StartupInitialization()
         {
 
-            //Env = new HexagonEnviroment(GridCanvas, new int[] { 16, 9 });
-            Env = new GridEnviroment(GridCanvas, new int[] { 16, 9 });
+            Env = new HexagonGridEnviroment(GridCanvas,  (16, 9));
+            // Env = new SquareGridEnviroment(GridCanvas, ( 16, 9 ));
             Env.StartNode = Env.Nodes.First();
             Env.EndNode = Env.Nodes.Last();
             Env.StartNode.SetType(NodeType.Start);
@@ -127,6 +128,23 @@ namespace PathfindingAlgorithms
             //Gen = new NoiseWallGenerator(Env, 30);
             Gen = Tools.WallGeneratorFromString(MVM.SelectedWallGenerator, Env);
             StartTimer(RunningState.WallGenerator);
+        }
+
+        private void EnviromentNewButton_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new NewEnviromentWindow();
+            if (win.ShowDialog() == true)
+            {
+                Env.Clear();
+                Env = win.ReturnEnviroment.GetEnv(GridCanvas);
+                
+            }
+        }
+        private void EnviromentResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            Env.RemovePaths();
+            Env.ClearState();
+            Env.ClearWalls();
         }
     }
 

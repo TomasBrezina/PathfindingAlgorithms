@@ -12,38 +12,29 @@ namespace PathfindingAlgorithms
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-        private string selectedEnviroment;
-        public string SelectedEnviroment
+        private int lowerValue;
+        public int LowerValue
         {
-            get { return selectedEnviroment; }
-            set { selectedEnviroment = value; OnPropertyChanged("SelectedEnviroment"); OnPropertyChanged("SelectedEnviromentImagePath"); }
+            get { return lowerValue; }
+            set { lowerValue = value; OnPropertyChanged("LowerValue");}
         }
-        public string SelectedEnviromentImagePath { 
-            get
-            {
-                switch(SelectedEnviroment)
-                {
-                    case "Square grid":
-                        return "images/background-square-grid.png";
-                    case "Hexagon grid":
-                        return "images/background-hexagon-grid.png";
-                    default:
-                        return "images/background-square-grid.png";
-                }
-            } 
-        }
-        public List<string> EnviromentList
+        private int higherValue;
+        public int HigherValue
         {
-            get
-            {
-                OnPropertyChanged("SelectedEnviromentImagePath");
-                return new List<string>()
-                {
-                    "Square grid",
-                    "Hexagon grid"
-                };
-            }
-            set { }
+            get { return higherValue; }
+            set { higherValue = value; OnPropertyChanged("HigherValue"); }
+        }
+        private int rowNum;
+        public int RowNum
+        {
+            get { return rowNum; }
+            set { rowNum = value; OnPropertyChanged("RowNum"); }
+        }
+        private int colNum;
+        public int ColNum
+        {
+            get { return colNum; }
+            set { colNum = value; OnPropertyChanged("ColNum"); }
         }
     }
 }
