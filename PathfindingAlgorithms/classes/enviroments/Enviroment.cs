@@ -30,6 +30,8 @@ namespace PathfindingAlgorithms
             Canv = canv;
         }
         public abstract void Initialize();
+        public abstract float HeuristicDist(Node start, Node end);
+
         protected abstract void OnMouseDown(object sender, MouseButtonEventArgs e);
         protected void SetType(Node node, NodeType type)
         {
@@ -68,6 +70,7 @@ namespace PathfindingAlgorithms
         public void ClearState() { foreach (Node node in Nodes) node.SetState(NodeState.Unseen); }
         public void AddPath(Path path)
         {
+            path.Polyline.StrokeThickness = 4;  // change thickness of path
             Paths.Add(path);
             Canv.Children.Add(path.Polyline);
         }

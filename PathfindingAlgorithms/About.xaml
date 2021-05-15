@@ -1,0 +1,52 @@
+﻿<Window x:Class="PathfindingAlgorithms.About"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PathfindingAlgorithms"
+        mc:Ignorable="d"
+        Title="About" Height="500" Width="500" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" Background="#eee">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"> 
+                <Image Source="images/icon.png" Height="40" Margin="0,0,10,0"/>
+                <TextBlock FontFamily="Trebuchet MS" FontSize="35" FontWeight="Bold">Pathfinding Algorithms</TextBlock>
+            </StackPanel>
+        </DockPanel>
+        <DockPanel Grid.Row="1" Background="White" Margin="20">
+            <RichTextBox IsReadOnly="True" Margin="10" BorderThickness="0" DockPanel.Dock="Bottom">
+                <FlowDocument >
+                    <Paragraph FontSize="20">Showcase of pathfinding algorithms</Paragraph>
+                    <Paragraph FontStyle="Italic" TextAlignment="Left" FontSize="14" Foreground="Gray">
+                        <Bold>Implemented algorithms:</Bold> BFS, Dijstras algorithm, A*
+                        <LineBreak/>
+                        <Bold>To implement:</Bold> DFS, Best-first search, ...
+                        <LineBreak/>
+
+                        <LineBreak/>
+                        <Bold>Implemented enviroments:</Bold> Square grid, Hex grid, Point graph
+                        <LineBreak/>
+                        <Bold>To implement:</Bold> ...
+                    </Paragraph>
+
+                    <Paragraph FontSize="17" TextAlignment="Right">
+                        <LineBreak/>
+                        Tomas Brezina, 2020
+                    </Paragraph>
+                </FlowDocument>
+            </RichTextBox>
+        </DockPanel>
+        <Button Click="GithubHyperlink_Click" Height="40" Width="150" FontSize="15" Grid.Row="2" Margin="100,20">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="images/github-logo.png" Height="20" Margin="7,0"/>
+                <TextBlock>GitHub</TextBlock>
+            </StackPanel>
+        </Button>
+    </Grid>
+</Window>

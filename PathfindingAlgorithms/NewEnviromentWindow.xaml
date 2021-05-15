@@ -88,16 +88,20 @@
                     </Grid.RowDefinitions>
                     <DockPanel Grid.Row="0" HorizontalAlignment="Center">
                         <StackPanel Margin="10,0" DockPanel.Dock="Left" Orientation="Horizontal" HorizontalAlignment="Center"  VerticalAlignment="Center">
-                            <TextBlock Text="Number of nodes:" Margin="5,2"/>
-                            <xctk:IntegerUpDown Value="9" Minimum="1" Maximum="200"/>
+                            <TextBlock Text="Height:" Margin="5,2"/>
+                            <xctk:IntegerUpDown Value="{Binding RowNum}" Minimum="1" Maximum="200"/>
+                        </StackPanel>
+                        <StackPanel Margin="10,0" DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Center"  VerticalAlignment="Center">
+                            <TextBlock Text="Width:" Margin="5,2"/>
+                            <xctk:IntegerUpDown Value="{Binding ColNum}" Minimum="1" Maximum="200"/>
                         </StackPanel>
                     </DockPanel>
-                    <StackPanel Grid.Row="1"  Margin="10,0" Orientation="Horizontal" HorizontalAlignment="Center"  VerticalAlignment="Center">
-                        <TextBlock Text="Number of edges:" Margin="5,2"/>
-                        <TextBlock Text="{Binding LowerValue}" Margin="5,2"/>
-                        <xctk:RangeSlider Name="neigboursRangeSlide" Margin="10,0" IsSnapToTickEnabled="True" Width="100" LowerValue="{Binding LowerValue}" HigherValue="{Binding HigherValue}" Minimum="1" Maximum="8"/>
-                        <TextBlock Text="{Binding HigherValue}" Margin="5,2"/>
-                    </StackPanel>
+                    <DockPanel Grid.Row="1" HorizontalAlignment="Center">
+                        <StackPanel Margin="10,0" DockPanel.Dock="Left" Orientation="Horizontal" HorizontalAlignment="Center"  VerticalAlignment="Center">
+                            <TextBlock Text="Radius:" Margin="5,2"/>
+                            <xctk:IntegerUpDown Value="{Binding Radius}" Minimum="50" Maximum="200"  Increment="10"/>
+                        </StackPanel>
+                    </DockPanel>
                     <Button Grid.Row="2" Height="30" Width="100" Content="Generate" Click="PointGenerateButton_Click"/>
                 </Grid>
             </TabItem>

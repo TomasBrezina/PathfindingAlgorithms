@@ -31,10 +31,13 @@ namespace PathfindingAlgorithms
         // Stack with parameters to replace recursion
         private Stack<RecursiveSubdivisionParameter> Layers;
         private Queue<Node> NodesToChange;
-        private int MinGap = 1;
+        public int MinGap = 1;
         public RecursiveSubdivision(GridEnviroment env) : base(env)
         {
             Env = env;
+
+            if (Env.GetType() == typeof(HexagonGridEnviroment)) { MinGap = 2; } // change min gap to two if hex env
+
             Random = new Random();
             Layers = new Stack<RecursiveSubdivisionParameter>();
             NodesToChange = new Queue<Node>();

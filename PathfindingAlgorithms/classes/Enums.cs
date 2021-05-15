@@ -9,7 +9,7 @@ namespace PathfindingAlgorithms
 {
     public enum RunningState
     {
-        Algorithm,
+        PathfindingAlgorithm,
         WallGenerator,
         NotRunning
     }

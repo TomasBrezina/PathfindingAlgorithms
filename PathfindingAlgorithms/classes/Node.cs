@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -22,16 +23,17 @@ namespace PathfindingAlgorithms
     public class Node
     {
         public int ID;
-        public double[] Pos;
+        public Vector OnScreenPos;
+        public (int, int) Pos;
         public List<Edge> Edges;
         public NodeType Type;
         public NodeState State;
         public Shape Shape;
-
-        public Node(int id, double[] pos, Shape shape)
+        public Node(int id, (int, int) pos, Vector onScreenPos, Shape shape)
         {
             ID = id;
             Pos = pos;
+            OnScreenPos = onScreenPos;
             Edges = new List<Edge>();
             Type = NodeType.Empty;
             State = NodeState.Unseen;

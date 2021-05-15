@@ -1,1 +1,4 @@
-﻿- Skip button
+﻿- Delaunay_triangulation
+- Planar graph
+- Poisson dics samlipng
+papers:

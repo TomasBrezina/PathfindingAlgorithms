@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -13,6 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Diagnostics;
+using System.ComponentModel;
 
 namespace PathfindingAlgorithms
 {
@@ -21,131 +24,95 @@ namespace PathfindingAlgorithms
     /// </summary>
     public partial class MainWindow : Window
     {
-        Enviroment Env;
-        Algorithm Alg;
-        WallGenerator Gen;
-        DispatcherTimer Timer;
-        MainViewModel MVM = new MainViewModel();
-        RunningState State;
-
+        private MainViewModel MVM = new MainViewModel();
+        private Main M;
 
         public MainWindow()
         {
             InitializeComponent();
 
             // Canvas
-            GridCanvas.Background = Brushes.Red;
             GridCanvas.Width = 680;
             GridCanvas.Height = 480;
-
-            
+   
             // Viev model            
             DataContext = MVM;
             MVM.IsRunning = false;
+            MVM.SelectedTickSpeed = 3;
 
-            // State
-            State = RunningState.NotRunning;
-
-            // Timer
-            Timer = new DispatcherTimer();
-            Timer.Interval = TimeSpan.FromMilliseconds(15);
-            Timer.Tick += new EventHandler(Step);
+            // Main class
+            M = new Main(GridCanvas, MVM); 
 
             Loaded += delegate
             {
-                StartupInitialization();
+                M.StartupInitialization();
             };
-        }
-
-        public void StartTimer(RunningState state)
-        {
-            Timer.Start();
-            MVM.IsRunning = true;
-            State = state;
-        }
-        public void StopTimer()
-        {
-            Timer.Stop();
-            MVM.IsRunning = false;
-            State = RunningState.NotRunning;
-        }
-        public void StartupInitialization()
-        {
-
-            Env = new HexagonGridEnviroment(GridCanvas,  (16, 9));
-            // Env = new SquareGridEnviroment(GridCanvas, ( 16, 9 ));
-            Env.StartNode = Env.Nodes.First();
-            Env.EndNode = Env.Nodes.Last();
-            Env.StartNode.SetType(NodeType.Start);
-            Env.EndNode.SetType(NodeType.End);
-        }
-        public void Step(object sender, EventArgs e)
-        {
-            switch (State)
-            {
-                case RunningState.Algorithm:
-                    if (!Alg.PathFound && Alg.PathExists != Exist.False) Alg.Step();
-                    else StopTimer();
-                    break;
-                case RunningState.WallGenerator:
-                    if (!Gen.IsFinished) Gen.Step();
-                    else StopTimer();
-                    break;
-            }
         }
         private void PlayPauseButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Timer.IsEnabled) Timer.Stop();
-            else Timer.Start();
+            M.PlayPauseTimer();
         }
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
-            Env.ClearState();
-            Env.RemovePaths();
-            StopTimer();
+            M.StopTimerAndClear();
         }
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Env.StartNode != null && Env.EndNode != null)
-            {
-                Env.ClearState(); 
-                Env.RemovePaths();
-                Alg = Tools.AlgorithmFromString(MVM.SelectedAlgorithm, Env.StartNode, Env.Nodes);
-                Env.AddPath(Alg.Path);
-                StartTimer(RunningState.Algorithm);
-            } else 
-            {
-                MessageBox.Show("Start and end have to be selected!", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
+            if (M.IsStart) M.Start(MVM.SelectedAlgorithm);
+            else MessageBox.Show("Start and end have to be selected!", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
         }
-
         private void GenerateWall_Click(object sender, RoutedEventArgs e)
         {
-            Env.RemovePaths();
-            Env.ClearState();
-            Env.ClearWalls();
-
-            //Gen = new NoiseWallGenerator(Env, 30);
-            Gen = Tools.WallGeneratorFromString(MVM.SelectedWallGenerator, Env);
-            StartTimer(RunningState.WallGenerator);
+            M.GenerateWall(MVM.SelectedWallGenerator);
         }
-
         private void EnviromentNewButton_Click(object sender, RoutedEventArgs e)
         {
             var win = new NewEnviromentWindow();
-            if (win.ShowDialog() == true)
-            {
-                Env.Clear();
-                Env = win.ReturnEnviroment.GetEnv(GridCanvas);
-                
-            }
+            if (win.ShowDialog() == true) M.NewEnviroment(win.ReturnEnviroment);
         }
         private void EnviromentResetButton_Click(object sender, RoutedEventArgs e)
         {
-            Env.RemovePaths();
-            Env.ClearState();
-            Env.ClearWalls();
+            M.ResetEnviroment();
         }
+        private void EnviromentExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new About();
+            win.Show();
+        }
+        private void SourceButton_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://github.com/TomasBrezina");
+        }
+
+        private void AlgorithmInfoButton_Click(object sender, RoutedEventArgs e)
+        {
+            var link = Tools.AlgorithmToLink(MVM.SelectedAlgorithm);
+            if (link != null) Process.Start(link);
+        }
+
+        // change color of toolbar overflow button
+        private void ToolBar_Loaded(object sender, RoutedEventArgs e)
+        {
+            Brush brush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#eee"));
+            ToolBar toolBar = sender as ToolBar;
+            var overflowGrid = toolBar.Template.FindName("OverflowGrid", toolBar) as Grid;
+            if (overflowGrid != null) overflowGrid.Background = brush;
+            var overflowButton = toolBar.Template.FindName("OverflowButton", toolBar) as ToggleButton;
+            if (overflowButton != null) overflowButton.Background = brush;
+            var overflowPanel = toolBar.Template.FindName("PART_ToolBarOverflowPanel", toolBar) as ToolBarOverflowPanel;
+            if (overflowPanel != null) overflowPanel.Background = brush;
+        }
+        private void TickSpeedSlider_ValueChange(object sender, RoutedEventArgs e)
+        {
+            
+            int intv = MVM.SelectedTickSpeed;
+            if (intv > 0 && intv <= 16) { M.ChangeTimerInterval(intv*intv); }
+        }
+        
     }
 
 }

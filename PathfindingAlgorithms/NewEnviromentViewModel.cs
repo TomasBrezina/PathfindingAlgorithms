@@ -12,18 +12,6 @@ namespace PathfindingAlgorithms
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-        private int lowerValue;
-        public int LowerValue
-        {
-            get { return lowerValue; }
-            set { lowerValue = value; OnPropertyChanged("LowerValue");}
-        }
-        private int higherValue;
-        public int HigherValue
-        {
-            get { return higherValue; }
-            set { higherValue = value; OnPropertyChanged("HigherValue"); }
-        }
         private int rowNum;
         public int RowNum
         {
@@ -35,6 +23,12 @@ namespace PathfindingAlgorithms
         {
             get { return colNum; }
             set { colNum = value; OnPropertyChanged("ColNum"); }
+        }
+        private int radius;
+        public int Radius
+        {
+            get { return radius; }
+            set { radius = value; OnPropertyChanged("Radius"); }
         }
     }
 }

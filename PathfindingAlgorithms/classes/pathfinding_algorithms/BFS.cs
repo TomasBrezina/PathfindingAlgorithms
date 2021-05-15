@@ -11,12 +11,12 @@ namespace PathfindingAlgorithms
     Unweighted
     O(v+e)
     */
-    public class BFS : Algorithm
+    public class BFS : PathfindingAlgorithm
     {
         private Node[] Pred;
         private Queue<Node> Queue;
 
-        public BFS(Node startNode, List<Node> graph) : base(startNode, graph)
+        public BFS(Node startNode, Node endNode, List<Node> graph) : base(startNode, endNode, graph)
         {
             // Initialization
             Queue = new Queue<Node>();
@@ -38,7 +38,7 @@ namespace PathfindingAlgorithms
                 case Exist.True:
                     PathStep();
                     break;
-                // If algorithm finished search and didnt found a path
+                // If algorithm finished search and didnt find a path
                 case Exist.False:
                     break;
             }
@@ -46,7 +46,7 @@ namespace PathfindingAlgorithms
         // Searching trought graph
         private void SearchStep()
         {
-            if (Queue.Count > 0) // While not empty
+            if (Queue.Count > 0) // if not empty
             {
                 Node node = Queue.Dequeue();
                 node.SetState(NodeState.Visited);

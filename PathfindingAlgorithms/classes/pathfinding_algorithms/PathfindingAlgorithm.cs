@@ -8,18 +8,20 @@ using System.Windows.Media;
 namespace PathfindingAlgorithms
 {
 
-    public abstract class Algorithm
+    public abstract class PathfindingAlgorithm
     {
         protected Node StartNode;
+        protected Node EndNode;
         protected List<Node> Graph;
 
         public Path Path;
         public Exist PathExists = Exist.Unknown;
         public bool PathFound = false;
 
-        public Algorithm(Node startNode, List<Node> graph)
+        public PathfindingAlgorithm(Node startNode, Node endNode, List<Node> graph)
         {
             StartNode = startNode;
+            EndNode = endNode;
             Graph = graph;
             Path = new Path();
         }

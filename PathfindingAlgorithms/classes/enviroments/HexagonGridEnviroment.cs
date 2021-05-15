@@ -26,7 +26,9 @@ namespace PathfindingAlgorithms
             HexHeight = HexRadius * 2;
 
             // Set canvas width and height to best fit the env shape
-            canv.Width = HexWidth * shape.Item1 + (HexWidth/2);
+            canv.Width = HexWidth * shape.Item1 + (HexWidth / 2);
+
+
             canv.Height = HexHeight * 0.75 * shape.Item2 + (HexHeight*0.25);
             Initialize();
         }
@@ -54,7 +56,8 @@ namespace PathfindingAlgorithms
                     for (int c = 0; c < 6; c++)  { points.Add(GetHexCorner(centerX, centerY,  c)); }
                     Node node = new Node(
                         index,
-                        new double[2] { centerX, centerY },
+                        (i, j),
+                        new Vector(centerX, centerY),
                         new Polygon { Points = points }
                     );
                     Nodes.Add(node);
@@ -92,6 +95,26 @@ namespace PathfindingAlgorithms
                     }
                 }
             }
+        }
+        private (int, int) cubeToPos((int, int, int) cube)
+        {
+            int col = cube.Item1 + (cube.Item3 - (cube.Item3 & 1)) / 2;
+            int row = cube.Item3;
+            return (col, row);
+        }
+        private (int, int, int) posToCube((int, int) pos)
+        {
+            int x = pos.Item1 - (pos.Item2 - (pos.Item2 & 1)) / 2;
+            int z = pos.Item2;
+            int y = -x - z;
+            return (x, y, z);
+        }
+        // Manhattan heuristic distance for hexagonal grid with cube coordinates
+        public override float HeuristicDist(Node start, Node end)
+        {
+            var a = posToCube(start.Pos);
+            var b = posToCube(end.Pos);
+            return (Math.Abs(a.Item1 - b.Item1) + Math.Abs(a.Item2 - b.Item2) + Math.Abs(a.Item3 - b.Item3)) / 2;
         }
         public override int CoordsToIndex(int x, int y)
         {

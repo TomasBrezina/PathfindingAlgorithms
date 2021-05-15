@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Shapes;
@@ -31,10 +32,8 @@ namespace PathfindingAlgorithms
                 {
                     Node node = new Node(
                         index,
-                        new double[2] {
-                            (i * RectSize) + (RectSize / 2),
-                            (j * RectSize) + (RectSize / 2)
-                        },
+                        (i, j),
+                        new Vector((i * RectSize) + (RectSize / 2), (j * RectSize) + (RectSize / 2)),
                         new Rectangle
                         {
                             Height = RectSize,
@@ -74,6 +73,17 @@ namespace PathfindingAlgorithms
                 }
             }
         }
+        // Diagonal distance
+        public override float HeuristicDist(Node start, Node end)
+        {
+            float dx = Math.Abs(start.Pos.Item1 - end.Pos.Item1);
+            float dy = Math.Abs(start.Pos.Item2 - end.Pos.Item2);
+
+            // D = 1; D2 = sqrt(2)
+            // D * (dx + dy) + (D2 - 2 * D) * min(dx, dy)
+            return (float)(dx + dy + ((1.41 - 2) * Math.Min(dx, dy)));
+        }
+        
         // convert 2d coordinates to list index of a node
         public override int CoordsToIndex(int x, int y)
         {

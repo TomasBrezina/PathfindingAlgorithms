@@ -21,19 +21,18 @@ namespace PathfindingAlgorithms
             set { isRunning = value; OnPropertyChanged("IsRunning"); }
         }
 
+        private int selectedTickSpeed;
+        public int SelectedTickSpeed
+        {
+            get { return selectedTickSpeed; }
+            set { selectedTickSpeed = value; OnPropertyChanged("SelectedTickSpeed"); }
+        }
+
         // Algorithms
         public string SelectedAlgorithm { get; set; }
-
         public List<string> AlgorithmsList
         {
-            get
-            {
-                return new List<string>()
-                {
-                    "Dijkstra",
-                    "BFS"      
-                };
-            }
+            get { return Tools.AlgorithmsList; }
         }
 
         // Wall generators

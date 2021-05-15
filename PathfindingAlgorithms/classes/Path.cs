@@ -9,7 +9,6 @@ using System.Windows.Shapes;
 
 namespace PathfindingAlgorithms
 {
-
     public class Path
     {
         public List<Node> Nodes;
@@ -29,8 +28,8 @@ namespace PathfindingAlgorithms
             Nodes.Add(node);
 
             Polyline.Points.Add(new Point(
-                node.Pos[0],
-                node.Pos[1]
+                node.OnScreenPos.X,
+                node.OnScreenPos.Y
             ));
         }
         public Node Last()

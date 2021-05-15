@@ -35,11 +35,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DelaunatorSharp, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Delaunator.1.0.7\lib\net471\DelaunatorSharp.dll</HintPath>
+    </Reference>
     <Reference Include="PriorityQueue, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5e136dbf0437dacd, processorArchitecture=MSIL">
       <HintPath>..\packages\OptimizedPriorityQueue.5.1.0\lib\net45\PriorityQueue.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -73,13 +77,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="classes\algorithms\Algorithm.cs" />
-    <Compile Include="classes\algorithms\BFS.cs" />
-    <Compile Include="classes\algorithms\Dijkstra.cs" />
+    <Compile Include="classes\other_algorithms\DelaunayTriangulation.cs" />
+    <Compile Include="classes\other_algorithms\PoissonDicsSampling.cs" />
+    <Compile Include="classes\pathfinding_algorithms\PathfindingAlgorithm.cs" />
+    <Compile Include="classes\pathfinding_algorithms\AStar.cs" />
+    <Compile Include="classes\pathfinding_algorithms\BFS.cs" />
+    <Compile Include="classes\pathfinding_algorithms\Dijkstra.cs" />
     <Compile Include="classes\Enums.cs" />
     <Compile Include="classes\enviroments\EnviromentConstructor.cs" />
     <Compile Include="classes\enviroments\GridEnviroment.cs" />
+    <Compile Include="classes\enviroments\PointEnviroment.cs" />
     <Compile Include="classes\Main.cs" />
+    <Compile Include="About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NewEnviromentViewModel.cs" />
     <Compile Include="NewEnviromentWindow.xaml.cs">
       <DependentUpon>NewEnviromentWindow.xaml</DependentUpon>
@@ -94,6 +105,10 @@
     <Compile Include="classes\wallgenerators\PrimWallGenerator.cs" />
     <Compile Include="classes\wallgenerators\RecursiveSubdivision.cs" />
     <Compile Include="classes\wallgenerators\WallGenerator.cs" />
+    <Page Include="About.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -167,10 +182,7 @@
   <ItemGroup>
     <Resource Include="images\start.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="new enviroment windows\" />
-    <Folder Include="nodes\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="images\wall-small.png" />
   </ItemGroup>
@@ -187,6 +199,15 @@
     <Resource Include="images\env-icon-cir.png" />
     <Resource Include="images\env-icon-hex.png" />
     <Resource Include="images\env-icon-sqr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\globe.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\github-logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

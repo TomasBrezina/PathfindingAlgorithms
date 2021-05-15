@@ -33,16 +33,14 @@ namespace PathfindingAlgorithms
             VM.RowNum = 9;
             VM.ColNum = 16;
 
-            VM.LowerValue = 1;
-            VM.HigherValue = 3;
+            VM.Radius = 70;
         }
 
 
         private void HexGenerateButton_Click(object sender, RoutedEventArgs e)
         {
-            ReturnEnviroment = new EnviromentConstructor()
+            ReturnEnviroment = new HexagonGridEnviromentConstructor()
             {
-                EnvType = typeof(HexagonGridEnviroment),
                 Shape = (VM.ColNum, VM.RowNum)
             };
             DialogResult = true;
@@ -50,19 +48,18 @@ namespace PathfindingAlgorithms
         }
         private void PointGenerateButton_Click(object sender, RoutedEventArgs e)
         {
-            ReturnEnviroment = new EnviromentConstructor()
+            ReturnEnviroment = new PointEnviromentConstructor()
             {
-                EnvType = typeof(HexagonGridEnviroment),
-                Shape = (VM.ColNum, VM.RowNum)
+                Shape = (VM.ColNum * 100, VM.RowNum * 100),
+                Radius = VM.Radius
             };
             DialogResult = true;
             this.Close();
         }
         private void SquareGenerateButton_Click(object sender, RoutedEventArgs e)
         {
-            ReturnEnviroment = new EnviromentConstructor()
+            ReturnEnviroment = new SquareGridEnviromentConstructor()
             {
-                EnvType = typeof(SquareGridEnviroment),
                 Shape = (VM.ColNum, VM.RowNum)
             };
             DialogResult = true;

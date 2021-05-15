@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace PathfindingAlgorithms
 {
-    class Dijkstra : Algorithm
+    class Dijkstra : PathfindingAlgorithm
     {
         private Node[] Pred;
         private float[] Dist;
         private SimplePriorityQueue<Node> PriorityQueue;
 
-        public Dijkstra(Node startNode, List<Node> graph) : base(startNode, graph)
+        public Dijkstra(Node startNode, Node endNode, List<Node> graph) : base(startNode, endNode, graph)
         {
             PriorityQueue = new SimplePriorityQueue<Node>();
             Dist = new float[Graph.Count];
@@ -38,7 +38,7 @@ namespace PathfindingAlgorithms
                 case Exist.True:
                     PathStep();
                     break;
-                // If algorithm finished search and didnt found a path
+                // If algorithm finished search and didnt find a path
                 case Exist.False:
                     break;
             }

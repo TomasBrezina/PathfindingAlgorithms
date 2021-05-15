@@ -16,7 +16,7 @@ namespace PathfindingAlgorithms
         {
             Shape = shape; // 2d shape of a grid
         }
-
+        
         public abstract (int, int) IndexToCoords(int i);
         public abstract int CoordsToIndex(int x, int y);
     }
