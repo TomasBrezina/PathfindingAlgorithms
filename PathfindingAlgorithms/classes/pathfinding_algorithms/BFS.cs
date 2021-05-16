@@ -13,7 +13,14 @@ namespace PathfindingAlgorithms
     */
     public class BFS : PathfindingAlgorithm
     {
+        /// <summary>
+        /// Array of predecessors.
+        /// </summary>
         private Node[] Pred;
+
+        /// <summary>
+        /// Queue of nodes as revealed.
+        /// </summary>
         private Queue<Node> Queue;
 
         public BFS(Node startNode, Node endNode, List<Node> graph) : base(startNode, endNode, graph)

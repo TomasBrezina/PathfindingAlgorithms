@@ -24,8 +24,8 @@ namespace PathfindingAlgorithms
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MainViewModel MVM = new MainViewModel();
-        private Main M;
+        private MainViewModel MVM = new MainViewModel(); 
+        private Main M; // Main class
 
         public MainWindow()
         {
@@ -43,11 +43,13 @@ namespace PathfindingAlgorithms
             // Main class
             M = new Main(GridCanvas, MVM); 
 
+            // Wait for the window to load
             Loaded += delegate
             {
                 M.StartupInitialization();
             };
         }
+        
         private void PlayPauseButton_Click(object sender, RoutedEventArgs e)
         {
             M.PlayPauseTimer();
@@ -108,7 +110,6 @@ namespace PathfindingAlgorithms
         }
         private void TickSpeedSlider_ValueChange(object sender, RoutedEventArgs e)
         {
-            
             int intv = MVM.SelectedTickSpeed;
             if (intv > 0 && intv <= 16) { M.ChangeTimerInterval(intv*intv); }
         }

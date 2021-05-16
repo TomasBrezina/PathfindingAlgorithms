@@ -5,8 +5,19 @@ namespace PathfindingAlgorithms
 {
     class Dijkstra : PathfindingAlgorithm
     {
+        /// <summary>
+        /// Array of predecessors.
+        /// </summary>
         private Node[] Pred;
+
+        /// <summary>
+        /// Array of minimum distances from StartNode.
+        /// </summary>
         private float[] Dist;
+
+        /// <summary>
+        /// Queue with priority of the distance from StartNode.
+        /// </summary>
         private SimplePriorityQueue<Node> PriorityQueue;
 
         public Dijkstra(Node startNode, Node endNode, List<Node> graph) : base(startNode, endNode, graph)
@@ -47,22 +58,28 @@ namespace PathfindingAlgorithms
         {
             if (PriorityQueue.Count > 0) // While not empty
             {
+                // Get node with lowest priority
                 Node node = PriorityQueue.Dequeue();
                 node.SetState(NodeState.Visited);
+                
+                // If reached end node
                 if (node.Type == NodeType.End)
                 {
                     PathExists = Exist.True;
                     Path.Add(node);
                 }
+
                 foreach (Edge edge in node.Edges)
                 {
                     Node nextNode = edge.Node;
+    
                     if (nextNode.Type != NodeType.Wall && nextNode.State != NodeState.Visited)
                     {
+                        // Distance from StartNode
                         float newDist = Dist[node.ID] + edge.Weight;
                         if (newDist < Dist[nextNode.ID])
                         {
-                            Pred[nextNode.ID] = node;
+                            Pred[nextNode.ID] = node; // Set predecessor
                             Dist[nextNode.ID] = newDist; // Set the new distance from StartNode
                             PriorityQueue.Enqueue(nextNode, newDist); // Update priority 
                             nextNode.SetState(NodeState.Revealed);

@@ -11,6 +11,11 @@ using System.Windows.Shapes;
 
 namespace PathfindingAlgorithms
 {
+    /// <summary>
+    /// Hexagon grid enviroment
+    /// Shape: Polygon (Hexagon)
+    /// Neighnours: 6
+    /// </summary>
     class HexagonGridEnviroment : GridEnviroment
     {
         private double HexRadius; 

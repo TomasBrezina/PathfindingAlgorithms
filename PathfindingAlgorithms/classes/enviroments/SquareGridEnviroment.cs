@@ -10,16 +10,19 @@ using System.Windows.Shapes;
 
 namespace PathfindingAlgorithms
 {
+    /// <summary>
+    /// Square grid enviroment
+    /// Shape: Rectangle
+    /// Neighnours: 8
+    /// </summary>
     public class SquareGridEnviroment : GridEnviroment
     {
-        private double RectSize;
+        private double RectSize; // Size of one Rectangle
         public SquareGridEnviroment(Canvas canv, (int,int) shape) : base(canv, shape)
         {
             RectSize = (DefaultCanvWidth / shape.Item1);
             canv.Width = RectSize * shape.Item1;
             canv.Height = RectSize * shape.Item2;
-            // unnecessary: size to fill at least one dimension
-            //RectSize = Math.Min(Canv.ActualHeight / Shape.Item2, Canv.ActualWidth / Shape.Item1);
             Initialize();
         }
 
@@ -50,14 +53,18 @@ namespace PathfindingAlgorithms
             }
             ConnectNodes();
         }
+
+        /// <summary> Creates edge between grid neighbours </summary>
         private void ConnectNodes()
         {
             for (int i = 0; i < Shape.Item1; i++)
             {
                 for (int j = 0; j < Shape.Item2; j++)
                 {
+                    // Edges coords shift 
                     int[][] shifts = new int[4][] { new int[] { -1, 0 }, new int[] { -1, -1 }, new int[] { 0, -1 }, new int[] { 1, -1 } };
                     float[] weights = new float[] { 1, 1.4f, 1, 1.4f };
+
                     for (int shiftIndex = 0; shiftIndex < shifts.Length; shiftIndex++)
                     {
                         int x = i + shifts[shiftIndex][0]; int y = j + shifts[shiftIndex][1];

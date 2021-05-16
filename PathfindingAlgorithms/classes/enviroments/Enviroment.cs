@@ -16,11 +16,13 @@ namespace PathfindingAlgorithms
         public Node StartNode;
         public Node EndNode;
 
+        /// <summary> List of Nodes to store graph. </summary>
         public List<Node> Nodes;
 
         protected List<Path> Paths;
         protected Canvas Canv;
 
+        /// <summary> Default width of canvas </summary>
         protected const double DefaultCanvWidth = 1000;
 
         public Enviroment(Canvas canv)
@@ -29,10 +31,18 @@ namespace PathfindingAlgorithms
             Nodes = new List<Node>();
             Canv = canv;
         }
+
+        /// <summary> Initialize enviroment. </summary>
         public abstract void Initialize();
+
+        /// <summary> Smallest possible distance from one node to another </summary>
         public abstract float HeuristicDist(Node start, Node end);
 
+
+        /// <summary> Click event - assigned to <c>Node.Shape</c> </summary>
         protected abstract void OnMouseDown(object sender, MouseButtonEventArgs e);
+
+        /// <summary> Set Type of Node - if Start/End Node change it in Enviroment. </summary>
         protected void SetType(Node node, NodeType type)
         {
             switch (node.Type)
@@ -61,19 +71,27 @@ namespace PathfindingAlgorithms
                     break;
             }  
         }
+
+        /// <summary> All walls to empty nodes. </summary>
         public void ClearWalls() {
             foreach (Node node in Nodes) 
             { 
                 if (node.Type == NodeType.Wall) node.SetType(NodeType.Empty);
             }
         }
+
+        /// <summary> Set all nodes's State to <c>NodeState.Unseen</c>. </summary>
         public void ClearState() { foreach (Node node in Nodes) node.SetState(NodeState.Unseen); }
+
+        /// <summary> Add path to canvas. </summary>
         public void AddPath(Path path)
         {
             path.Polyline.StrokeThickness = 4;  // change thickness of path
             Paths.Add(path);
             Canv.Children.Add(path.Polyline);
         }
+
+        /// <summary> Remove all paths from canvas. </summary>
         public void RemovePaths()
         {
             foreach (Path path in Paths)
@@ -82,6 +100,8 @@ namespace PathfindingAlgorithms
             }
             Paths.Clear();
         }
+
+        /// <summary> Remove everything from canvas. </summary>
         public void Clear()
         {
             Canv.Children.Clear();

@@ -12,11 +12,16 @@ using DelaunatorSharp;
 
 namespace PathfindingAlgorithms
 {
+    /// <summary>
+    /// Point enviroment
+    /// Shape: Circle
+    /// Neighnours: random (3-5?)
+    /// </summary>
     class PointEnviroment : Enviroment
     {
-        private Vector CanvasSize;
-        private double Radius;
-        private const double CircleDiameter = 30;
+        private Vector CanvasSize; 
+        private double Radius; // space between
+        private const double CircleDiameter = 30; 
 
         public PointEnviroment(Canvas canv, (int,int) shape, double radius) : base(canv)
         {
@@ -86,7 +91,9 @@ namespace PathfindingAlgorithms
             {
                 var pNode = nodesDict[PointToTupleID(edge.P)];
                 var qNode = nodesDict[PointToTupleID(edge.Q)];
-                if (HeuristicDist(pNode, qNode) > 2*Radius)
+
+                // if edge is too long skip (removes hull edges)
+                if (HeuristicDist(pNode, qNode) > 2*Radius) 
                 {
                     continue;
                 } // skip long edge

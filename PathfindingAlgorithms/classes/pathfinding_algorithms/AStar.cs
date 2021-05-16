@@ -9,11 +9,28 @@ namespace PathfindingAlgorithms
 {
     class AStar : PathfindingAlgorithm
     {
+        /// <summary>
+        /// Array of predecessors.
+        /// </summary>
         private Node[] Pred;
+
+        /// <summary>
+        /// Array of minimum distances from StartNode.
+        /// </summary>
         private float[] Dist;
+
+        /// <summary>
+        /// Queue with 2 priorities (f(x), h(x)) 
+        /// </summary>
+        /// Pořadí procházení uzlů určuje pomocí funkce f(x)=g(x)+h(x), 
+        /// kde g(x) představuje vzdálenost vrcholu od počátku (stejně jako u Dijkstrova algoritmu) 
+        /// a h(x) představuje heuristický odhad nejmenší vzdálenosti od konce.
         private SimplePriorityQueue<Node,(float,float)> PriorityQueue;
         private Func<Node, Node, float> HeuristicDist;
 
+        /// <summary>
+        /// If first items are equal than the second ones decides.
+        /// </summary>
         public class TupleComparer : IComparer<(float,float)>
         {
             public int Compare((float, float) a, (float, float) b)
