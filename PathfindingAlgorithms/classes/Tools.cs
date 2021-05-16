@@ -56,7 +56,7 @@ namespace PathfindingAlgorithms
                 case "Clear walls":
                     return new ClearWalls(env);
                 case "Prim algorithm":
-                    return new PrimWallGenerator(env);
+                    return null; // new PrimWallGenerator(env);
                 default:
                     return null;
             }

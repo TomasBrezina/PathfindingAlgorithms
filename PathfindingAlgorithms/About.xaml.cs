@@ -27,7 +27,7 @@ namespace PathfindingAlgorithms
 
         private void GithubHyperlink_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start("https://github.com/TomasBrezina");
+            Process.Start("https://github.com/TomasBrezina/PathfindingAlgorithms");
         }
     }
 }

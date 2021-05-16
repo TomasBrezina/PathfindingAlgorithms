@@ -85,7 +85,7 @@ namespace PathfindingAlgorithms
         }
         private void SourceButton_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start("https://github.com/TomasBrezina");
+            Process.Start("https://github.com/TomasBrezina/PathfindingAlgorithms");
         }
 
         private void AlgorithmInfoButton_Click(object sender, RoutedEventArgs e)

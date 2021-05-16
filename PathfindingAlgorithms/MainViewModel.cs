@@ -45,7 +45,6 @@ namespace PathfindingAlgorithms
                 return new List<string>()
                 {
                     "Recursive subdivision",
-                    "Prim algorithm",
                     "Noise generator",
                     "Clear walls"
                 };
