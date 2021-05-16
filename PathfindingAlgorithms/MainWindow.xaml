@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PathfindingAlgorithms" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Icon="images/flag-start.png"
+        Icon="images/icon.png"
         Title="PathfindingAlgorithms by Tomas Brezina" Height="600" Width="1000" ResizeMode="CanResize" Background="#eee"
         MinHeight="480" MinWidth="650">
 

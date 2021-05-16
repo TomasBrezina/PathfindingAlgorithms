@@ -43,7 +43,7 @@ namespace PathfindingAlgorithms
             Shape.Tag = id;
             Shape.Fill = NodeBrushes.Empty;
             Shape.Stroke = Brushes.Gray;
-            Shape.StrokeThickness = 0.5;
+            Shape.StrokeThickness = 0.8;
         }
         public void MarkAs(Brush b) { Shape.Fill = b; }
         public void SetDefaultState() { SetState(NodeState.Unseen); }

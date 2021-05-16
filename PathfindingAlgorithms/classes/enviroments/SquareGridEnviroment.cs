@@ -78,12 +78,11 @@ namespace PathfindingAlgorithms
         {
             float dx = Math.Abs(start.Pos.Item1 - end.Pos.Item1);
             float dy = Math.Abs(start.Pos.Item2 - end.Pos.Item2);
-
             // D = 1; D2 = sqrt(2)
             // D * (dx + dy) + (D2 - 2 * D) * min(dx, dy)
             return (float)(dx + dy + ((1.41 - 2) * Math.Min(dx, dy)));
         }
-        
+
         // convert 2d coordinates to list index of a node
         public override int CoordsToIndex(int x, int y)
         {

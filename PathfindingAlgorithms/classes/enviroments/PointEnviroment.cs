@@ -116,6 +116,5 @@ namespace PathfindingAlgorithms
 
         private (int, int) PointToTupleID(DelaunatorSharp.Point pt) { return ((int)Math.Round(pt.X), (int)Math.Round(pt.Y)); }
         private (int, int) PointToTupleID(IPoint pt) { return ((int)Math.Round(pt.X), (int)Math.Round(pt.Y)); }
-        private ((int, int), (int, int)) EdgeToTupleID(IEdge e) { return (PointToTupleID(e.P), PointToTupleID(e.Q)); } 
     }
 }

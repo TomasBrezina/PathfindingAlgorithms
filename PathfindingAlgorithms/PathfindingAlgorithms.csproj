@@ -77,7 +77,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="classes\other_algorithms\DelaunayTriangulation.cs" />
     <Compile Include="classes\other_algorithms\PoissonDicsSampling.cs" />
     <Compile Include="classes\pathfinding_algorithms\PathfindingAlgorithm.cs" />
     <Compile Include="classes\pathfinding_algorithms\AStar.cs" />

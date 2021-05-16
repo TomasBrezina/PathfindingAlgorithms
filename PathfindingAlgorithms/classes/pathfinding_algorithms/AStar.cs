@@ -27,6 +27,9 @@ namespace PathfindingAlgorithms
                 }
             }
         }
+
+
+        // find the shortest path using heuristics
         public AStar(Node startNode, Node endNode, List<Node> graph, Func<Node,Node,float> heuristics) : base(startNode, endNode, graph)
         {
             HeuristicDist = heuristics;
