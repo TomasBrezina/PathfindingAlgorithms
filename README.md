@@ -2,7 +2,7 @@
 # PathfindingAlgorithms
  Showcase of pathfinding algorithms in different environments.
  
-**Enviroments:**
+**Environments:**
 
 ![enter image description here](https://lh3.googleusercontent.com/6sysFRu0jVYt39aK8wOeiFRKuH_Cv2PNM-jpBrvfVWOfBfEiFy6BSoQtovsmrjNoopOMg4hZHI4_NckeJPJTvYVpQAxoksfhKeGz1mN4WERCBmgFYsuGKLg--bPzVW7fovHVoaieNg=w2400)
 
