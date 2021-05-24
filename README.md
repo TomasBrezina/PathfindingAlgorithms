@@ -1,6 +1,6 @@
 
 # PathfindingAlgorithms
- Showcase of pathfinding algorithms in different enviroments.
+ Showcase of pathfinding algorithms in different environments.
  
 **Enviroments:**
 
