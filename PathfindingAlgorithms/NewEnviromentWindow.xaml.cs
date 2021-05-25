@@ -15,19 +15,19 @@ using System.Windows.Shapes;
 namespace PathfindingAlgorithms
 {
     /// <summary>
-    /// Interakční logika pro NewEnviromentWindow.xaml
+    /// Interakční logika pro NewEnvironmentWindow.xaml
     /// </summary>
-    public partial class NewEnviromentWindow : Window
+    public partial class NewEnvironmentWindow : Window
     {
-        NewEnviromentViewModel VM;
+        NewEnvironmentViewModel VM;
 
-        public EnviromentConstructor ReturnEnviroment;
+        public EnvironmentConstructor ReturnEnvironment;
 
-        public NewEnviromentWindow()
+        public NewEnvironmentWindow()
         {
             InitializeComponent();
 
-            VM = new NewEnviromentViewModel();
+            VM = new NewEnvironmentViewModel();
             DataContext = VM;
 
             VM.RowNum = 9;
@@ -39,7 +39,7 @@ namespace PathfindingAlgorithms
 
         private void HexGenerateButton_Click(object sender, RoutedEventArgs e)
         {
-            ReturnEnviroment = new HexagonGridEnviromentConstructor()
+            ReturnEnvironment = new HexagonGridEnvironmentConstructor()
             {
                 Shape = (VM.ColNum, VM.RowNum)
             };
@@ -48,7 +48,7 @@ namespace PathfindingAlgorithms
         }
         private void PointGenerateButton_Click(object sender, RoutedEventArgs e)
         {
-            ReturnEnviroment = new PointEnviromentConstructor()
+            ReturnEnvironment = new PointEnvironmentConstructor()
             {
                 Shape = (VM.ColNum * 100, VM.RowNum * 100),
                 Radius = VM.Radius
@@ -58,7 +58,7 @@ namespace PathfindingAlgorithms
         }
         private void SquareGenerateButton_Click(object sender, RoutedEventArgs e)
         {
-            ReturnEnviroment = new SquareGridEnviromentConstructor()
+            ReturnEnvironment = new SquareGridEnvironmentConstructor()
             {
                 Shape = (VM.ColNum, VM.RowNum)
             };

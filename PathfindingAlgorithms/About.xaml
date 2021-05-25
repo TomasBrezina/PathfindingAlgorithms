@@ -30,7 +30,7 @@
                         <LineBreak/>
 
                         <LineBreak/>
-                        <Bold>Implemented enviroments:</Bold> Square grid, Hex grid, Point graph
+                        <Bold>Implemented Environments:</Bold> Square grid, Hex grid, Point graph
                         <LineBreak/>
                         <Bold>To implement:</Bold> ...
                     </Paragraph>

@@ -67,16 +67,16 @@ namespace PathfindingAlgorithms
         {
             M.GenerateWall(MVM.SelectedWallGenerator);
         }
-        private void EnviromentNewButton_Click(object sender, RoutedEventArgs e)
+        private void EnvironmentNewButton_Click(object sender, RoutedEventArgs e)
         {
-            var win = new NewEnviromentWindow();
-            if (win.ShowDialog() == true) M.NewEnviroment(win.ReturnEnviroment);
+            var win = new NewEnvironmentWindow();
+            if (win.ShowDialog() == true) M.NewEnvironment(win.ReturnEnvironment);
         }
-        private void EnviromentResetButton_Click(object sender, RoutedEventArgs e)
+        private void EnvironmentResetButton_Click(object sender, RoutedEventArgs e)
         {
-            M.ResetEnviroment();
+            M.ResetEnvironment();
         }
-        private void EnviromentExitButton_Click(object sender, RoutedEventArgs e)
+        private void EnvironmentExitButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }

@@ -13,17 +13,17 @@ using DelaunatorSharp;
 namespace PathfindingAlgorithms
 {
     /// <summary>
-    /// Point enviroment
+    /// Point Environment
     /// Shape: Circle
     /// Neighnours: random (3-5?)
     /// </summary>
-    class PointEnviroment : Enviroment
+    class PointEnvironment : Environment
     {
         private Vector CanvasSize; 
         private double Radius; // space between
         private const double CircleDiameter = 30; 
 
-        public PointEnviroment(Canvas canv, (int,int) shape, double radius) : base(canv)
+        public PointEnvironment(Canvas canv, (int,int) shape, double radius) : base(canv)
         {
             CanvasSize = new Vector(shape.Item1, shape.Item2);
             canv.Width = CanvasSize.X;

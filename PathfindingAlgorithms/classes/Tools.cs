@@ -25,7 +25,7 @@ namespace PathfindingAlgorithms
                 default: return null;
             }
         }
-        public static PathfindingAlgorithm AlgorithmFromString(string name, Enviroment env)
+        public static PathfindingAlgorithm AlgorithmFromString(string name, Environment env)
         {
             switch (name)
             {
@@ -40,7 +40,7 @@ namespace PathfindingAlgorithms
             }
         }
 
-        public static WallGenerator WallGeneratorFromString(string name, Enviroment env)
+        public static WallGenerator WallGeneratorFromString(string name, Environment env)
         {
             switch (name)
             {
@@ -48,9 +48,9 @@ namespace PathfindingAlgorithms
                     return new NoiseWallGenerator(env, 30);
                 case "Recursive subdivision":
                     // if env is inherited
-                    if (env.GetType().IsSubclassOf(typeof(GridEnviroment)))
+                    if (env.GetType().IsSubclassOf(typeof(GridEnvironment)))
                     {
-                        return new RecursiveSubdivision((GridEnviroment) env);
+                        return new RecursiveSubdivision((GridEnvironment) env);
                     }
                     else return null;
                 case "Clear walls":

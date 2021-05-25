@@ -19,13 +19,13 @@ namespace PathfindingAlgorithms
         private (int, int)[] Neighbours;
         private (int, int)[] Between;
  
-        public PrimWallGenerator(Enviroment env) : base(env) 
+        public PrimWallGenerator(Environment env) : base(env) 
         {
-            if (env is HexagonGridEnviroment)
+            if (env is HexagonGridEnvironment)
             {
                 Neighbours = new (int, int)[6] { (-2, 0), (-1, -2), (+1, -2), (+2, 0), (+1, +2), (-1, +2) };
             }
-            else if (env is SquareGridEnviroment)
+            else if (env is SquareGridEnvironment)
             {
                 Neighbours = new (int, int)[4] { (-2, 0), (0, -2), (2, 0), (0, 2) };
                 Between = new (int, int)[4] { (-1, 0), (0, -1), (1, 0), (0, 1) }; // because grid node has 8 edges

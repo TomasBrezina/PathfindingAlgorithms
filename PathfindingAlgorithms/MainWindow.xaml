@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PathfindingAlgorithms" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Icon="images/icon.png"
-        Title="PathfindingAlgorithms by Tomas Brezina" Height="600" Width="1000" ResizeMode="CanResize" Background="#eee"
+        Title="PathfindingAlgorithms by Tomas Brezina" Height="600" Width="1000" ResizeMode="CanResize" Background="#fff"
         MinHeight="480" MinWidth="650">
 
     <Window.Resources>
@@ -20,10 +20,10 @@
         </Grid.RowDefinitions>
         <DockPanel>
             <Menu Padding="5" Background="#cccccc" DockPanel.Dock="Top">
-                <MenuItem Header="Enviroment">
-                    <MenuItem Header="_New" Click="EnviromentNewButton_Click"/>
-                    <MenuItem Header="_Reset" Click="EnviromentResetButton_Click" />
-                    <MenuItem Header="_Exit" Click="EnviromentExitButton_Click"/>
+                <MenuItem Header="Environment">
+                    <MenuItem Header="_New" Click="EnvironmentNewButton_Click"/>
+                    <MenuItem Header="_Reset" Click="EnvironmentResetButton_Click" />
+                    <MenuItem Header="_Exit" Click="EnvironmentExitButton_Click"/>
                 </MenuItem>
                 
                 <MenuItem Header="About" Click="AboutButton_Click"/>

@@ -11,7 +11,7 @@ namespace PathfindingAlgorithms
 {
     public class Main
     {
-        public Enviroment Env;
+        public Environment Env;
         public PathfindingAlgorithm Alg;
         public WallGenerator Gen;
         public DispatcherTimer Timer;
@@ -38,7 +38,7 @@ namespace PathfindingAlgorithms
         public void StartupInitialization()
         {
             // Default initialization
-            Env = new SquareGridEnviroment(Canv, ( 16, 9 ));
+            Env = new SquareGridEnvironment(Canv, ( 16, 9 ));
             Env.StartNode = Env.Nodes.First();
             Env.EndNode = Env.Nodes.Last();
             Env.StartNode.SetType(NodeType.Start);
@@ -118,17 +118,17 @@ namespace PathfindingAlgorithms
             }
             else MessageBox.Show("Selected wall generator cannot run.");
         }
-        /* Enviroment */
-        public void NewEnviroment(EnviromentConstructor envCon)
+        /* Environment */
+        public void NewEnvironment(EnvironmentConstructor envCon)
         {
             Env.Clear(); // remove all canv children
-            Env = envCon.Construct(Canv); // generate new enviroment
+            Env = envCon.Construct(Canv); // generate new Environment
             Env.StartNode = Env.Nodes.First();
             Env.EndNode = Env.Nodes.Last();
             Env.StartNode.SetType(NodeType.Start);
             Env.EndNode.SetType(NodeType.End);
         }
-        public void ResetEnviroment()
+        public void ResetEnvironment()
         {
             Env.RemovePaths();
             Env.ClearState();

@@ -8,11 +8,11 @@ using System.Windows.Input;
 
 namespace PathfindingAlgorithms
 {
-    public abstract class GridEnviroment : Enviroment
+    public abstract class GridEnvironment : Environment
     {
         public (int,int) Shape;
 
-        public GridEnviroment(Canvas canv, (int, int) shape) : base(canv)
+        public GridEnvironment(Canvas canv, (int, int) shape) : base(canv)
         {
             Shape = shape; // 2d shape of a grid
         }

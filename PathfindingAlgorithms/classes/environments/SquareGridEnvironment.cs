@@ -11,14 +11,14 @@ using System.Windows.Shapes;
 namespace PathfindingAlgorithms
 {
     /// <summary>
-    /// Square grid enviroment
+    /// Square grid Environment
     /// Shape: Rectangle
     /// Neighnours: 8
     /// </summary>
-    public class SquareGridEnviroment : GridEnviroment
+    public class SquareGridEnvironment : GridEnvironment
     {
         private double RectSize; // Size of one Rectangle
-        public SquareGridEnviroment(Canvas canv, (int,int) shape) : base(canv, shape)
+        public SquareGridEnvironment(Canvas canv, (int,int) shape) : base(canv, shape)
         {
             RectSize = (DefaultCanvWidth / shape.Item1);
             canv.Width = RectSize * shape.Item1;

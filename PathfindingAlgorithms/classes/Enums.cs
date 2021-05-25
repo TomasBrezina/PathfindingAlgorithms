@@ -38,8 +38,8 @@ namespace PathfindingAlgorithms
         public static SolidColorBrush End = Brushes.Red;
         public static SolidColorBrush Wall = Brushes.Black;
         public static SolidColorBrush Empty = Brushes.White;
-        public static SolidColorBrush Visited = Brushes.DarkGray;
-        public static SolidColorBrush Revealed = Brushes.LightGray;
+        public static SolidColorBrush Visited = (SolidColorBrush)(new BrushConverter().ConvertFrom("#999"));
+        public static SolidColorBrush Revealed = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ccc"));
 
         public static Dictionary<NodeType, SolidColorBrush> FromType = new Dictionary<NodeType, SolidColorBrush> {
             {NodeType.Start, Start},

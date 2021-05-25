@@ -12,17 +12,17 @@ using System.Windows.Shapes;
 namespace PathfindingAlgorithms
 {
     /// <summary>
-    /// Hexagon grid enviroment
+    /// Hexagon grid Environment
     /// Shape: Polygon (Hexagon)
     /// Neighnours: 6
     /// </summary>
-    class HexagonGridEnviroment : GridEnviroment
+    class HexagonGridEnvironment : GridEnvironment
     {
         private double HexRadius; 
         private double HexWidth; // 2 * HexRadius
         private double HexHeight; // Sqrt(3) * HexRadius
 
-        public HexagonGridEnviroment(Canvas canv, (int, int) shape) : base(canv, shape)
+        public HexagonGridEnvironment(Canvas canv, (int, int) shape) : base(canv, shape)
         {
             // radius to fully fill width or height of canvas with hexagons
 

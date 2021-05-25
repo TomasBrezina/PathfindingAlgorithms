@@ -13,7 +13,7 @@ namespace PathfindingAlgorithms
         private int Density;
         private int Index;
         private Random Random;
-        public NoiseWallGenerator(Enviroment env, int density) : base(env)
+        public NoiseWallGenerator(Environment env, int density) : base(env)
         {
             Density = density;
             Index = 0;

@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 
 namespace PathfindingAlgorithms
 {
-    public abstract class Enviroment
+    public abstract class Environment
     {
         public Node StartNode;
         public Node EndNode;
@@ -25,14 +25,14 @@ namespace PathfindingAlgorithms
         /// <summary> Default width of canvas </summary>
         protected const double DefaultCanvWidth = 1000;
 
-        public Enviroment(Canvas canv)
+        public Environment(Canvas canv)
         {
             Paths = new List<Path>();
             Nodes = new List<Node>();
             Canv = canv;
         }
 
-        /// <summary> Initialize enviroment. </summary>
+        /// <summary> Initialize Environment. </summary>
         public abstract void Initialize();
 
         /// <summary> Smallest possible distance from one node to another </summary>
@@ -42,7 +42,7 @@ namespace PathfindingAlgorithms
         /// <summary> Click event - assigned to <c>Node.Shape</c> </summary>
         protected abstract void OnMouseDown(object sender, MouseButtonEventArgs e);
 
-        /// <summary> Set Type of Node - if Start/End Node change it in Enviroment. </summary>
+        /// <summary> Set Type of Node - if Start/End Node change it in Environment. </summary>
         protected void SetType(Node node, NodeType type)
         {
             switch (node.Type)

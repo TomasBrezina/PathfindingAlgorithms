@@ -8,7 +8,7 @@ namespace PathfindingAlgorithms
 {
     class ClearWalls : WallGenerator
     {
-        public ClearWalls(Enviroment env) : base(env) { }
+        public ClearWalls(Environment env) : base(env) { }
         public override void Step()
         {
             foreach (Node node in Env.Nodes)

@@ -9,8 +9,8 @@ namespace PathfindingAlgorithms
     public abstract class WallGenerator
     {
         public bool IsFinished;
-        protected Enviroment Env;
-        public WallGenerator(Enviroment env)
+        protected Environment Env;
+        public WallGenerator(Environment env)
         {
             Env = env;
             IsFinished = false;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PathfindingAlgorithms
 {
-    class NewEnviromentViewModel : INotifyPropertyChanged
+    class NewEnvironmentViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
