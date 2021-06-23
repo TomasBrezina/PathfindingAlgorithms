@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PathfindingAlgorithms" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Icon="images/icon.png"
-        Title="PathfindingAlgorithms by Tomas Brezina" Height="600" Width="1000" ResizeMode="CanResize" Background="#fff"
+        Title="PathfindingAlgorithms by Tomas Brezina" Height="720" Width="1280" ResizeMode="CanResize" Background="#eee"
         MinHeight="480" MinWidth="650">
 
     <Window.Resources>
